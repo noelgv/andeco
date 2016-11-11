@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% block contenido %}
+{% load widget_tweaks %}
+
+<div class="right_col" role="main">
+	<div class="">
+		<div class="page-title">
+			<div class="title_left">
+				<h3>Registro Responsables</h3>
+			</div>         
+		</div>
+		<div class="clearfix"></div>
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div class="x_panel">
+
+					<div class="x_content">
+						<br />
+						<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post">{% csrf_token %}
+							
+							<div class="item form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="nombre">{{form.nombre.label}}<span class="required"></span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									{{form.nombre|add_class:"form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"|attr:"placeholder:nombre"}}
+		                          {% if form.errors.nombre %}
+			                          <ul id="parsley-id-5" class="parsley-errors-list filled">
+			                          	<li class="parsley-required">{{form.errors.nombre|removetags:'ul li'}}</li>
+			                          </ul>
+			                       {% endif %}
+								</div>
+							</div>
+							<div class="item form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="codigo">{{form.codigo.label}}<span class="required"></span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									{{form.codigo|add_class:"form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"|attr:"placeholder:codigo"}}
+                          {% if form.errors.codigo %}
+	                          <ul id="parsley-id-5" class="parsley-errors-list filled">
+	                          	<li class="parsley-required">{{form.errors.codigo|removetags:'ul li'}}</li>
+	                          </ul>
+	                       {% endif %}
+								</div>
+							</div>
+
+							<div class="item form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="ci">{{form.ci.label}}<span class="required"></span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									{{form.ci|add_class:"form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"|attr:"placeholder:ci"}}
+                          {% if form.errors.ci %}
+	                          <ul id="parsley-id-5" class="parsley-errors-list filled">
+	                          	<li class="parsley-required">{{form.errors.ci|removetags:'ul li'}}</li>
+	                          </ul>
+	                       {% endif %}
+								</div>
+							</div>
+
+							<div class="item form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="telefono">{{form.telefono.label}}<span class="required"></span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									{{form.telefono|add_class:"form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"|attr:"placeholder:telefono"}}
+                          {% if form.errors.telefono %}
+	                          <ul id="parsley-id-5" class="parsley-errors-list filled">
+	                          	<li class="parsley-required">{{form.errors.telefono|removetags:'ul li'}}</li>
+	                          </ul>
+	                       {% endif %}
+								</div>
+							</div>
+
+							<div class="item form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="direccion">{{form.direccion.label}}<span class="required"></span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									{{form.direccion|add_class:"form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"|attr:"placeholder:direccion"}}
+                          {% if form.errors.direccion %}
+	                          <ul id="parsley-id-5" class="parsley-errors-list filled">
+	                          	<li class="parsley-required">{{form.errors.direccion|removetags:'ul li'}}</li>
+	                          </ul>
+	                       {% endif %}
+								</div>
+							</div>
+							
+							<div class="ln_solid"></div>
+							<div class="form-group">
+								<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+									<button type="submit" class="btn btn-primary">Cancelar</button>
+									<button type="submit" class="btn btn-success">Guardar</button>
+								</div>
+							</div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+
+
+	</div>
+</div>
+
+
+{% endblock %}
+{% block js %}
+<script>
+
+	$('#id_fecha').daterangepicker({
+		singleDatePicker: true,
+		calender_style: "picker_4",
+		locale: {
+			format: 'DD/MM/YYYY'
+		}
+	}, function(start, end, label) {
+		console.log(start.toISOString(), end.toISOString(), label);
+	});
+
+</script>
+{% endblock js %}

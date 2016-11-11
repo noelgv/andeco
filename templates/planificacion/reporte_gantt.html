@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block contenido %}
+  <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              
+             
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+
+              <div class="col-md-12 col-sm-12 col-xs-12">
+             
+          
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h3>Proyecto: {{nombre_proyecto}}</h3>
+                  <div class="x_content">
+                    <input value="Exportar a PDF" type="button" onclick='gantt.exportToPDF({locale:"es"})'>
+                    <input value="Exportar a PNG" type="button" onclick='gantt.exportToPNG({locale:"es"})'>
+                    <div id="gantt_here" style='width:100%; height:100%;'></div>
+                    
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
+{% endblock %}
+{% block js %}
+{% load staticfiles %}
+  <script src="{% static "js/gantt/dhtmlxgantt.js"%}"></script>
+  <script src="{% static "js/gantt/locale/locale_es.js"%}"></script>
+
+  <script src="http://export.dhtmlx.com/gantt/api.js"></script> 
+  <link rel="stylesheet" type="text/css" href="{% static "js/gantt/dhtmlxgantt.css"%}">
+
+  <script type="text/javascript">
+
+    $.ajax({
+      url: '/gantt_ajax/{{pk}}',
+      dataType: 'json',
+      type: 'GET',
+      success: function(dato) {
+        console.log(dato);
+        var link_data = [];
+    
+        for (var i = 0; i < dato.length-1; i++) {
+            // console.log('{id:', i+1,'source:', i+1, 'target:', i+2,'}');
+            link_data.push({id: i+1, source: i+1, target: i+2, type: '0'});
+        }
+
+        var tasks =  {
+            data:dato,
+            links:link_data 
+        };
+        gantt.config.autosize = "y";
+        gantt.config.autosize_min_width = 800;
+
+        gantt.init("gantt_here");
+
+        gantt.templates.progress_text=function (start, end, task) {
+            console.log(task);
+            return "<span style='text-align:left;'>"+Math.round(task.progress*100)+ "% </span>";
+        };
+
+        // gantt.config.date_scale = "%F, %d";
+
+        gantt.config.columns=[
+            {name:"text",       label:"Nombre Etapa",  tree:true, width:"*" },
+            {name:"start_date", label:"Fecha de inicio", align: "center" },
+            {name:"duration", label:"Duracion", align: "center" },
+        ];
+
+        gantt.parse(tasks);
+
+        
+      }
+
+    }).fail(function(data){
+        console.log('errorrr');
+    });
+
+
+    // var dato = [
+    //         {id:1, text:"Etapa #1", start_date:"1-04-2013", duration:2, order:20, progress:0.1, parent:0},
+    //         {id:2, text:"Etapa #2", start_date:"4-04-2013", duration:2, order:20, progress:0.6, parent:0},
+    //         {id:3, text:"Etapa #3", start_date:"7-04-2013", duration:2, order:20, progress:0.6, parent:0},
+    //         {id:4, text:"Etapa #4", start_date:"9-04-2013", duration:2, order:20, progress:0.6, parent:0},
+    //         {id:5, text:"Etapa #5", start_date:"11-04-2013", duration:2, order:20, progress:0.6, parent:0}
+    //     ];
+
+    
+  </script>
+
+{% endblock js %}
