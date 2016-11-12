@@ -24,7 +24,7 @@
                       <div class="modal-content">
 
                         <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                          <button type="button" class="close close1" ><span aria-hidden="true">×</span>
                           </button>
                           <h4 class="modal-title" id="myModalLabel">Regitro Etapa</h4>
                         </div>
@@ -36,20 +36,20 @@
                               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nombre Etapa <span class="required">*</span>
                               </label>
                               <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="first-name" name="nombre_etapa" class="form-control col-md-7 col-xs-12" type="text">
+                                <input id="first-name" name="nombre_etapa" class="form-control col-md-7 col-xs-12" type="text" required="required">
                               </div>
                             </div>
                             <div class="form-group">
                               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Fecha de inicio <span class="required">*</span>
                               </label>
                               <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="fecha_inicio" name="fecha_inicio" class="form-control col-md-7 col-xs-12" type="text">
+                                <input id="fecha_inicio" name="fecha_inicio" class="form-control col-md-7 col-xs-12" type="text" required="required">
                               </div>
                             </div>
                             <div class="form-group">
                               <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Fecha de conclusion</label>
                               <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="fecha_conclucion" class="form-control col-md-7 col-xs-12" name="fecha_conclucion" type="text">
+                                <input id="fecha_conclucion" class="form-control col-md-7 col-xs-12" name="fecha_conclucion" type="text" required="required">
                               </div>
                             </div>
                            
@@ -57,14 +57,14 @@
                               <label class="control-label col-md-3 col-sm-3 col-xs-12">Dias <span class="required">*</span>
                               </label>
                               <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="dias" class="date-picker form-control col-md-7 col-xs-12" name="dias" type="text">
+                                <input id="dias" class="date-picker form-control col-md-7 col-xs-12" name="dias" type="number" data-parsley-type="number">
                               </div>
                             </div>
                             <div class="form-group">
                               <label class="control-label col-md-3 col-sm-3 col-xs-12">% Avance <span class="required">*</span>
                               </label>
                               <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="avance" class=" form-control col-md-7 col-xs-12" name="avance" type="text">
+                                <input id="avance" class=" form-control col-md-7 col-xs-12" name="avance" type="number" required="required" data-parsley-type="number">
                               </div>
                             </div>
                             <div class="form-group">
@@ -72,14 +72,14 @@
                               </label>
                               <div class="col-md-6 col-sm-6 col-xs-12">
                          
-                                <textarea id="observaciones" class="form-control" name="observaciones" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100" ></textarea>
+                                <textarea id="observaciones" class="form-control" name="observaciones" data-parsley-trigger="keyup" data-parsley-minlength="5" data-parsley-maxlength="100" required="required"></textarea>
                               </div>
                             </div>
                             <div class="form-group">
                               <label class="control-label col-md-3 col-sm-3 col-xs-12">Informe <span class="required">*</span>
                               </label>
                               <div class="col-md-6 col-sm-6 col-xs-12">
-                                 <textarea id="informe" class="form-control" name="informe" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100" ></textarea>
+                                 <textarea id="informe" class="form-control" name="informe" data-parsley-trigger="keyup" data-parsley-minlength="5" data-parsley-maxlength="100" required="required"></textarea>
                               </div>
                             </div>
                             <div class="ln_solid"></div>
@@ -88,7 +88,7 @@
                           </form>
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-default close1">Cerrar</button>
                           <button type="button" id="register-etapa" class="btn btn-primary">Guardar</button>
                         </div>
 
@@ -268,6 +268,7 @@
         // === guardando nueva etapa ===========
         $('#register-etapa').click(function(){
             console.log('am i called');
+            if ($("#formetapa").parsley().validate()){
                 $.ajax({
                     type: "POST",
                     url: "/crear_etapa/{{pk}}",
@@ -283,7 +284,15 @@
                     error: function(xhr,errmsg,err) {
                         console.log(xhr.status + ": " + xhr.responseText);
                     }  
-                });      
+                });
+            }      
+        });
+
+        $(".close1").click(function() {
+          $('.modal-body').find('textarea,input').val('');
+          $("#avance").val(0);
+          $('#formetapa').parsley().reset();
+          $('.modal').modal('hide');
         });
 
 

@@ -16,7 +16,7 @@
              
               <a href="/crear_planificacion" class="btn btn-success">Crear Proyecto</a>
                 <div class="x_panel">
-                  <div class="x_title">
+                  
                     
                   <div class="x_content">
                     
@@ -64,10 +64,15 @@
                               <td>{{ convenios.responsable_proyecto}}</td>
                               <td>{{ convenios.responsable_seguimiento}}</td>
                               <td>
-                                <a href="/crear_etapa/{{ convenios.pk}}" class="btn btn-round btn-primary  btn-sm">Etapas</a>
-                                <a href="/reporte_gantt/{{ convenios.pk}}" class="btn btn-round btn-info  btn-sm">Reporte</a>
-                                <button type="button" class="btn btn-round btn-warning  btn-sm">Editar</button>
-                                <button type="button" class="btn btn-round btn-danger  btn-sm">Eliminar</button>
+                            
+                                <a href="/crear_etapa/{{ convenios.pk}}" class="btn btn-primary  btn-sm" data-toggle="tooltip" data-original-title="Etapas"><i class="fa fa-sitemap"></i></a>
+                               
+
+                                <a href="/reporte_gantt/{{ convenios.pk}}" class="btn btn-info btn-sm" data-toggle="tooltip" data-original-title="Reportes"><i class="fa fa-bar-chart-o"></i> </a>
+                               
+                                <a href="#" class="btn btn-warning btn-sm" data-toggle="tooltip" data-original-title="Editar"><i class="fa fa-pencil"></i> </a>
+                                <a href="#" class="btn btn-danger btn-sm" data-toggle="tooltip" data-original-title="Eliminar"><i class="fa fa-trash-o"></i> </a>
+
                               </td>
 
                               
@@ -80,7 +85,7 @@
                       </tbody>
                     </table>
                   </div>
-                </div>
+              
               </div>
 
             </div>
