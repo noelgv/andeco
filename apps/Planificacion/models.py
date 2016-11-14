@@ -8,6 +8,8 @@ class Proyectos(models.Model):
 	responsable_proyecto = models.CharField(max_length=200)
 	responsable_seguimiento = models.CharField(max_length=200)
 	porcentage_global = models.CharField(max_length=200, null=True, blank=True)
+	fecha_inicio = models.DateField(null=True, blank=True)
+	fecha_conclucion = models.DateField(null=True, blank=True)
 
 	def __unicode__(self):
 		return self.nombre_proyecto
@@ -15,7 +17,7 @@ class Proyectos(models.Model):
 
 class Etapas(models.Model):
 	fecha_inicio = models.DateField()
-	fecha_conclucion = models.DateField(max_length=200)
+	fecha_conclucion = models.DateField()
 	nombre_etapa = models.CharField(max_length=200)
 	avance = models.CharField(max_length=200)
 	dias = models.IntegerField()

@@ -15,6 +15,8 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
              
               <a href="/crear_planificacion" class="btn btn-success">Crear Proyecto</a>
+             
+
                 <div class="x_panel">
                   
                     
@@ -70,9 +72,32 @@
 
                                 <a href="/reporte_gantt/{{ convenios.pk}}" class="btn btn-info btn-sm" data-toggle="tooltip" data-original-title="Reportes"><i class="fa fa-bar-chart-o"></i> </a>
                                
-                                <a href="#" class="btn btn-warning btn-sm" data-toggle="tooltip" data-original-title="Editar"><i class="fa fa-pencil"></i> </a>
-                                <a href="#" class="btn btn-danger btn-sm" data-toggle="tooltip" data-original-title="Eliminar"><i class="fa fa-trash-o"></i> </a>
+                                <a href="/editar_proyecto/{{convenios.id}}" class="btn btn-warning btn-sm" data-toggle="tooltip" data-original-title="Editar" ><i class="fa fa-pencil"></i></a>
+                                
+                                
 
+                                <a  class="btn btn-danger btn-sm" data-toggle="modal" data-original-title="Eliminar"  data-target=".modal-{{ convenios.id}}"><i class="fa fa-trash-o"></i> </a>
+
+                                <div class="modal fade modal-{{ convenios.id}}" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                                  <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+
+                                      <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel2">Eliminar</h4>
+                                      </div>
+                                      <div class="modal-body">
+                                        Esta seguro que  quiere eliminar "{{ convenios.nombre_proyecto}}"
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                      
+                                        <a href="/delete_proyect/{{convenios.id}}" class="btn btn-primary">Aceptar</a>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
                               </td>
 
                               

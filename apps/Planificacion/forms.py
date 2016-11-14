@@ -31,4 +31,7 @@ class proyectosForm(forms.Form):
 	nombre_proyecto = forms.CharField()
 	responsable_proyecto = forms.CharField()
 	responsable_seguimiento = forms.CharField()
+	fecha_inicio = forms.CharField()
+	fecha_conclucion = forms.CharField()
+	
 	

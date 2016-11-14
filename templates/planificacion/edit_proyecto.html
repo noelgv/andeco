@@ -24,7 +24,14 @@
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           
-                          {{form.regiones|add_class:" form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
+                          <select class=" form-control col-md-7 col-xs-12" id="id_regiones" name="region">
+                            <option value="" selected="selected">--- seleccionar---</option>
+                            <option value="1">Metropolitana</option>
+                            <option value="2">Vallez</option>
+                            <option value="3">Tropico</option>
+                            <option value="4">Cono sur</option>
+                            <option value="5">Andina</option>
+                          </select>
                           {% if form.errors.regiones %}
 	                          <ul id="parsley-id-5" class="parsley-errors-list filled">
 	                          	<li class="parsley-required">{{form.errors.regiones|removetags:'ul li'}}</li>
@@ -39,7 +46,7 @@
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           
-                          <select class="form-control col-md-7 col-xs-12 {% if form.errors.municipios %}parsley-error{% endif %}" id="id_municipios" name="municipios">
+                          <select class="form-control col-md-7 col-xs-12 {% if form.errors.municipios %}parsley-error{% endif %}" id="id_municipios" name="municipio">
                             <option value="">Seelecione el municipio</option>
                           </select>
                           {% if form.errors.municipios %}
@@ -98,7 +105,7 @@
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           
-                          {{form.fecha_inicio|add_class:"date-picker form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
+                          {{form.fecha_inicio|add_class:"form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
                           {% if form.errors.fecha_inicio %}
                             <ul id="parsley-id-5" class="parsley-errors-list filled">
                               <li class="parsley-required">{{form.errors.fecha_inicio|removetags:'ul li'}}</li>
@@ -113,7 +120,7 @@
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           
-                          {{form.fecha_conclucion|add_class:"date-picker form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
+                          {{form.fecha_conclucion|add_class:"form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
                           {% if form.errors.fecha_conclucion %}
                             <ul id="parsley-id-5" class="parsley-errors-list filled">
                               <li class="parsley-required">{{form.errors.fecha_conclucion|removetags:'ul li'}}</li>
@@ -160,7 +167,8 @@
           calender_style: "picker_4",
           locale: {
             format: 'YYYY-MM-DD'
-          }
+          },
+
         }, function(start, end, label) {
           console.log(start.toISOString(), end.toISOString(), label);
         });
@@ -283,7 +291,7 @@
           //function to populate child select box
           function list(array_list){
                //reset child options
-               $("#id_municipios").html(""); 
+              $("#id_municipios").html(""); 
               $(array_list).each(function (i) { //populate child options 
                   console.log(i);
          
@@ -293,6 +301,52 @@
 
               });
           }
+
+
+          function municipio(array_list){
+
+            $("#id_municipios").html(""); 
+              $(array_list).each(function (i) { //populate child options 
+         
+
+              $("#id_municipios").append("<option value=\""+array_list[i].value+"\">"+array_list[i].display+"</option>");
+
+              
+
+              });
+
+              $("#id_municipios option:selected").removeAttr("selected");
+
+              $('#id_municipios option[value="{{form.municipio.value}}"]').attr("selected", "selected");
+
+          }
+
+          var region_data;
+
+          {% if form.region.value == '1' %}
+            region_data = Metropolitana
+          {% endif %}
+
+          {% if form.region.value == '2' %}
+            region_data = Vallez
+          {% endif %}
+
+          {% if form.region.value == '3' %}
+            region_data = Tropico
+          {% endif %}
+
+          {% if form.region.value == '4' %}
+            region_data = Cono sur
+          {% endif %}
+
+          {% if form.region.value == '5' %}
+            region_data = Andina
+          {% endif %}
+
+          municipio(region_data);
+
+          $('#id_regiones option:selected').removeAttr("selected");
+          $('#id_regiones option[value="{{form.region.value}}"]').attr("selected", "selected");
         
 
 

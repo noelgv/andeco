@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 #from .views import CrearResponsables
-from .views import ListadoResponsables, listadoProyectos
+from .views import ListadoResponsables, listadoProyectos, EditProyecto
 
 urlpatterns = patterns('',
     # url(r'^responsables/$', Juridica.as_view(), name='responsables'),
@@ -13,6 +13,8 @@ urlpatterns = patterns('',
     url(r'^lista_proyectos/$', listadoProyectos.as_view(), name='lista_proyectos'),
     url(r'^reporte_gantt/(?P<pk>\d+)$', 'apps.Planificacion.views.ReporteGantt', name='reporte_gantt'),
     url(r'^gantt_ajax/(?P<pk>\d+)$', 'apps.Planificacion.views.GanttAjax', name='gantt_ajax'),
+    url(r'^delete_proyect/(?P<id>\d+)$', 'apps.Planificacion.views.eliminarProyecto', name='delete_proyect'),
+    url(r'^editar_proyecto/(?P<pk>\d+)$', EditProyecto.as_view(), name='editar_proyecto'),
 
 
     )

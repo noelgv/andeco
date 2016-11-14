@@ -1,5 +1,5 @@
 from django.shortcuts import render_to_response, render
-from django.views.generic import TemplateView, FormView, ListView
+from django.views.generic import TemplateView, FormView, ListView, UpdateView
 from .forms import responsablesForm, proyectosForm
 from django.core.urlresolvers import reverse_lazy
 from .models import Responsables, Proyectos, Etapas
@@ -11,7 +11,7 @@ import json
 from decimal import Decimal, ROUND_HALF_UP
 from django.core.serializers.json import DjangoJSONEncoder
 import datetime
-
+from django import forms 
 
 
 # Create your views here.
@@ -68,7 +68,10 @@ def CrearPlanificacion(request):
                 municipio=form.cleaned_data['municipios'],
                 nombre_proyecto=form.cleaned_data['nombre_proyecto'],
                 responsable_proyecto=form.cleaned_data['responsable_proyecto'],
-                responsable_seguimiento=form.cleaned_data['responsable_seguimiento'])
+                responsable_seguimiento=form.cleaned_data['responsable_seguimiento'],
+                fecha_inicio=form.cleaned_data['fecha_inicio'],
+                fecha_conclucion=form.cleaned_data['fecha_conclucion'])
+               
             proyectos.save()
             return HttpResponseRedirect(reverse_lazy('crear_etapa', kwargs={'pk':proyectos.pk}))
     else:
@@ -132,3 +135,23 @@ def GanttAjax(request, pk):
 
     json_data = json.dumps(data, cls=DjangoJSONEncoder)
     return HttpResponse(json_data, content_type="application/json")
+
+
+def eliminarProyecto(request, id):
+    p = Proyectos.objects.get(id=id)
+    p.delete()
+    return HttpResponseRedirect(reverse_lazy('lista_proyectos'))
+
+
+class EditProyecto(UpdateView):
+    template_name = "planificacion/edit_proyecto.html"
+    model = Proyectos
+    fields = ['region', 'municipio', 'nombre_proyecto', 'responsable_proyecto', 'responsable_seguimiento', 'fecha_inicio', 'fecha_conclucion']
+    success_url = reverse_lazy('lista_proyectos')
+
+    def get_form(self, form_class):
+        form = super(EditProyecto, self).get_form(form_class)
+        form.fields['fecha_inicio'].widget = forms.DateInput(format='%Y-%m-%d')
+        form.fields['fecha_conclucion'].widget = forms.DateInput(format='%Y-%m-%d')
+        return form
+        
