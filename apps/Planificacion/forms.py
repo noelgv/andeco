@@ -33,5 +33,9 @@ class proyectosForm(forms.Form):
 	responsable_seguimiento = forms.CharField()
 	fecha_inicio = forms.CharField()
 	fecha_conclucion = forms.CharField()
-	
+
+
+class inspeccionForm(forms.Form):
+	objetivo = forms.CharField(max_length=100)
+	avance = forms.CharField()
 	

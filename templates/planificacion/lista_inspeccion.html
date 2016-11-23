@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+{% block contenido %}
+  <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              
+
+              
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <!-- modals -->
+                  <!-- Large modal -->
+              
+
+                  <a href="/crear_inspeccion/{{pk}}" class="btn btn-primary" >Agregar Inspeccion</a>
+           
+                  <div class="message_wrapper">
+                    <h4 class="heading">Proyecto:</h4>
+                    <blockquote class="message">{{proyecto}}</blockquote>
+                   
+                   
+                  </div>
+                  <div class="message_wrapper">
+                    <h4 class="heading">Etapa: </h4>
+                    <blockquote class="message">{{etapa}}</blockquote>
+                   
+                   
+                  </div>
+
+
+                 
+                  <div class="table-responsive"> 
+                    <table id="tb-etapa" class="table table-striped table-bordered jambo_table">
+                      <thead>
+                         <tr>
+                          <th>N° </th>
+                          <th>Fecha</th>
+                          <th>Hora</th>
+                          <th>Objetivo</th>
+                          <th>% Avance</th>
+                          <th>Eliminar</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        {% for ins in inspecciones%}
+                        <tr>
+                    
+                          <td>{{forloop.counter}}</td>
+                          <td>{{ins.fecha}}</td>
+                          <td>{{ins.hora}}</td>
+                          <td>{{ins.objectivo}}</td>
+                          <td>
+                        
+
+                            <div class="progress progress_sm">
+                              <div class="progress-bar 
+                              {% if ins.avance|add:0 > 0 and ins.avance|add:0 < 35 %}
+                                progress-bar-danger
+                              {% elif ins.avance|add:0 > 35 and  ins.avance|add:0 < 80  %}
+                                progress-bar-warning
+
+                              {% elif ins.avance|add:0 > 80 and ins.avance|add:0 <= 100 %}
+                                progress-bar-success
+                           
+                              {% else %}
+                                progress-bar-success
+                              {% endif%}
+                              " role="progressbar"
+                             
+                               data-transitiongoal='{{ins.avance}}'     >
+                              
+                              </div>
+                            </div>
+                            <small>{{ins.avance}}% </small>
+                          </td>
+                          <td><a  class="btn btn-danger btn-sm" data-toggle="modal" data-original-title="Eliminar"  data-target=".modal-6"><i class="fa fa-trash-o"></i> </a></td>
+                        </tr>
+                        {% endfor %}
+                           
+                      </tbody>
+                    </table>
+                  </div>
+            
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
+{% endblock %}
+{% block js %}
+  <script>
+      
+        $('#fecha_inicio').daterangepicker({
+          singleDatePicker: true,
+          calender_style: "picker_4",
+          locale: {
+            format: 'YYYY-MM-DD'
+          }
+        }, function(start, end, label) {
+          console.log(start.toISOString(), end.toISOString(), label);
+        });
+
+        
+        $("#avance").val(0);
+
+        
+
+        // === metodo para mandar el csrf_token a django mediante ajax ====
+        $.ajaxSetup({ 
+             beforeSend: function(xhr, settings) {
+                 function getCookie(name) {
+                     var cookieValue = null;
+                     if (document.cookie && document.cookie != '') {
+                         var cookies = document.cookie.split(';');
+                         for (var i = 0; i < cookies.length; i++) {
+                             var cookie = jQuery.trim(cookies[i]);
+                             // Does this cookie string begin with the name we want?
+                             if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                 break;
+                             }
+                         }
+                     }
+                     return cookieValue;
+                 }
+                 if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                     // Only send the token to relative URLs i.e. locally.
+                     xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                 }
+             } 
+        });
+
+
+        function resetTabla() {  
+            $("#tb-etapa > tbody > tr").remove();
+        }
+
+        function listaEtapas() {
+          var t = document.getElementById('tb-etapa').getElementsByTagName('tbody')[0];
+          resetTabla();
+          $.ajax({
+            url: '/ajax_inspeccion/{{pk}}',
+            dataType: 'json',
+            type: 'GET',
+            success: function(datos) {
+              console.log('ddddddddd');
+              console.log(datos);
+              // $.map(datos, function (d) {
+              //    console.log(d.cartera); 
+              //    $('#nombres').val(d.nombres);
+              //    $('#pk_cliente').val(d.pk);
+              // });
+
+              
+            var numero = 0;
+             for (var c in datos){
+                  numero  = numero + 1;
+                  // obteniendo el tr de la tabla
+                  var rowCount = t.rows.length;
+                  // insertando los  td
+                  var row = t.insertRow(rowCount);
+                  // insertando ids a los tr de la tabla
+                  row.id='tr_'+rowCount;
+                  //agregando celdas
+                  var cell1 = row.insertCell(0);
+                  var cell2 = row.insertCell(1);
+                  var cell3 = row.insertCell(2);
+                  var cell4 = row.insertCell(3);
+                  var cell5 = row.insertCell(4);
+                
+                  // insertando los datos en los td
+                  cell1.innerHTML = numero;
+                  cell2.innerHTML = datos[c].fecha;
+                  cell3.innerHTML = datos[c].hora;
+                  cell4.innerHTML = datos[c].objetivo;
+                  cell5.innerHTML = '<div class="progress"> <div class="progress-bar" role="progressbar" aria-valuenow="'+datos[c].avance+'" aria-valuemin="0" aria-valuemax="100" style="width: '+datos[c].avance+'%;"> '+datos[c].avance+'% </div> </div>';
+
+                                
+              };
+              
+            }
+
+          }).fail(function(data){
+              console.log('errorrr');
+          });
+        }
+
+        // listaEtapas();
+
+        // === guardando nueva etapa ===========
+        $('#register-etapa').click(function(){
+            console.log('am i called');
+            if ($("#formetapa").parsley().validate()){
+                $.ajax({
+                    type: "POST",
+                    url: "/crear_etapa/{{pk}}",
+                    dataType: "json",
+                    data: $("#formetapa").serialize(),
+                    success: function(data) {
+                       // para cerrar el modal
+                        listaEtapas();
+                        // para limpiar los imputs del modal
+                        $('.modal-body').find('textarea,input').val('');
+                        $('.modal').modal('hide');
+                    },
+                    error: function(xhr,errmsg,err) {
+                        console.log(xhr.status + ": " + xhr.responseText);
+                    }  
+                });
+            }      
+        });
+
+        $(".close1").click(function() {
+          $('.modal-body').find('textarea,input').val('');
+          $("#avance").val(0);
+          $('#formetapa').parsley().reset();
+          $('.modal').modal('hide');
+        });
+
+
+
+
+    </script>
+{% endblock js %}

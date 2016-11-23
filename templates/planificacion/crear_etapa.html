@@ -98,7 +98,7 @@
 
                   <div class="x_content">
                   
-                    <table id="tb-etapa" class="table table-striped table-bordered">
+                    <table id="tb-etapa" class="table table-striped table-bordered jambo_table">
                       <thead>
                          <tr>
                           <th>N° </th>
@@ -111,6 +111,7 @@
                           <th>% Avance</th>
                           <th>Observaciones</th>
                           <th>Informe</th>
+                          <th></th>
                         </tr>
                       </thead>
 
@@ -240,6 +241,7 @@
                   var cell8 = row.insertCell(7);
                   var cell9 = row.insertCell(8);
                   var cell10 = row.insertCell(9);
+                  var cell11 = row.insertCell(10);
                   // insertando los datos en los td
                   cell1.innerHTML = numero;
                   cell2.innerHTML = datos[c].nombre_etapa;
@@ -248,9 +250,25 @@
                   cell5.innerHTML = datos[c].dias;
                   cell6.innerHTML = datos[c].responsable;
                   cell7.innerHTML = datos[c].seguimiento;
-                  cell8.innerHTML = datos[c].avance;
+
+                  var class_style = '';
+                  if (datos[c].avance > 0 && datos[c].avance < 35) {
+                    class_style = 'progress-bar-danger';
+                  }else if (datos[c].avance > 35 && datos[c].avance < 80){
+                    class_style = 'progress-bar-warning';
+                  }else if (datos[c].avance > 80 && datos[c].avance <= 100){
+                    class_style = 'progress-bar-success';
+                  }else{
+                    class_style = 'progress-bar-success';
+                  };
+
+                  cell8.innerHTML = '<div class="progress progress_sm"> <div class="progress-bar '+class_style+'" role="progressbar" data-transitiongoal="'+datos[c].avance+'"> </div> </div> <small>'+datos[c].avance+'% </small>';
                   cell9.innerHTML = datos[c].observaciones;
                   cell10.innerHTML = datos[c].informe;
+                  cell11.innerHTML = '<a href="/lista_inspeccion/'+datos[c].pk+'" title="" class="btn btn-info btn-sm">Inspeccion</a>';
+
+                  $('.progress .progress-bar').progressbar();
+                  
                   // cell3.innerHTML = datos[0].cartera[c].pago;
                   // cell4.innerHTML = datos[0].cartera[c].saldo;
                                 

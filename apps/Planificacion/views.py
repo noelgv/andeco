@@ -1,8 +1,8 @@
 from django.shortcuts import render_to_response, render
 from django.views.generic import TemplateView, FormView, ListView, UpdateView
-from .forms import responsablesForm, proyectosForm
+from .forms import responsablesForm, proyectosForm, inspeccionForm
 from django.core.urlresolvers import reverse_lazy
-from .models import Responsables, Proyectos, Etapas
+from .models import Responsables, Proyectos, Etapas, Inspeccion
 
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect, HttpResponse
@@ -10,7 +10,7 @@ from django.template import RequestContext
 import json
 from decimal import Decimal, ROUND_HALF_UP
 from django.core.serializers.json import DjangoJSONEncoder
-import datetime
+import datetime, time
 from django import forms 
 
 
@@ -38,9 +38,36 @@ class ListadoResponsables(ListView):
     template_name = 'planificacion/listado_responsables.html'
 
 
-class listadoProyectos(ListView):
-    model = Proyectos
-    template_name = 'planificacion/listado_Proyectos.html'
+# class listadoProyectos(ListView):
+#     model = Proyectos
+#     template_name = 'planificacion/listado_Proyectos.html'
+
+
+def listadoProyectos(request):
+    proyectos = Proyectos.objects.all()
+    porcentage = 0
+    data = []
+    for p in proyectos:
+        etapas = Etapas.objects.filter(proyecto=p.pk)
+        avance = 0
+        cant_etapa = 0
+        for e in etapas:
+            cant_etapa = cant_etapa + 1
+            avance = avance + Decimal(e.avance)
+        print '------------'
+        print avance
+        print cant_etapa
+        if avance != 0 and cant_etapa != 0:
+            porcentage = avance / cant_etapa
+            proyecto = Proyectos.objects.filter(pk=p.pk)
+            proyecto.update(porcentage_global=porcentage)
+        redondeado = Decimal(porcentage.quantize(Decimal('.01'), rounding=ROUND_HALF_UP))
+        data.append({'pk': p.pk, 'region': p.region, 'municipio': p.municipio, 'nombre_proyecto': p.nombre_proyecto, 'responsable_proyecto': p.responsable_proyecto, 'responsable_seguimiento': p.responsable_seguimiento, 'porcentage_global': redondeado })
+
+    variables = RequestContext(request, {'object_list': data})
+
+    return render_to_response('planificacion/listado_Proyectos.html', variables)
+
 
 
 def Crearproyecto(request):
@@ -69,6 +96,7 @@ def CrearPlanificacion(request):
                 nombre_proyecto=form.cleaned_data['nombre_proyecto'],
                 responsable_proyecto=form.cleaned_data['responsable_proyecto'],
                 responsable_seguimiento=form.cleaned_data['responsable_seguimiento'],
+                porcentage_global=0,
                 fecha_inicio=form.cleaned_data['fecha_inicio'],
                 fecha_conclucion=form.cleaned_data['fecha_conclucion'])
                
@@ -107,7 +135,7 @@ def listaEtapas(request, pk):
     etapas = Etapas.objects.filter(proyecto=pk)
     data = []
     for etapa in etapas:
-        data.append({'pk': etapa.pk, 'fecha_inicio': etapa.fecha_inicio, 'fecha_conclucion': etapa.fecha_conclucion, 'nombre_etapa': etapa.nombre_etapa, 'avance': etapa.avance, 'dias': etapa.dias, 'observaciones': etapa.observaciones, 'informe': etapa.informe, 'responsable': etapa.proyecto.responsable_proyecto, 'seguimiento': etapa.proyecto.responsable_seguimiento})
+        data.append({'pk': etapa.pk, 'fecha_inicio': etapa.fecha_inicio, 'fecha_conclucion': etapa.fecha_conclucion, 'nombre_etapa': etapa.nombre_etapa, 'avance': etapa.avance, 'dias': etapa.dias, 'observaciones': etapa.observaciones, 'informe': etapa.informe, 'responsable': etapa.proyecto.responsable_proyecto, 'seguimiento': etapa.proyecto.responsable_seguimiento, 'proyecto': etapa.proyecto.nombre_proyecto})
 
     json_data = json.dumps(data, cls=DjangoJSONEncoder)
     return HttpResponse(json_data, content_type="application/json")
@@ -155,3 +183,45 @@ class EditProyecto(UpdateView):
         form.fields['fecha_conclucion'].widget = forms.DateInput(format='%Y-%m-%d')
         return form
         
+
+# Create your views here.
+def listaInspeccion(request, pk):
+    etapa = Etapas.objects.get(pk=pk)
+    inspecciones = Inspeccion.objects.filter(etapa=pk)
+    print time.strftime("%X")
+
+    variables = RequestContext(request, {'pk': pk, 'etapa': etapa.nombre_etapa, 'proyecto': etapa.proyecto.nombre_proyecto,  'inspecciones': inspecciones})
+
+    return render_to_response('planificacion/lista_inspeccion.html', variables)
+
+
+def listaInspeccionAjax(request, pk):
+    inspecciones = Inspeccion.objects.filter(etapa=pk)
+    data = []
+    for ins in inspecciones:
+        data.append({'pk': ins.pk, 'fecha': ins.fecha, 'hora': ins.hora, 'objetivo': ins.objectivo, 'avance': ins.avance})
+
+    json_data = json.dumps(data, cls=DjangoJSONEncoder)
+    return HttpResponse(json_data, content_type="application/json")
+
+
+def CrearInspeccion(request, pk):
+    if request.method == 'POST':
+        form = inspeccionForm(request.POST)
+        if form.is_valid():
+            inspeccion = Inspeccion(
+                fecha=datetime.date.today(),
+                hora=datetime.datetime.today().time(),
+                objectivo=form.cleaned_data['objetivo'],
+                avance=form.cleaned_data['avance'],
+                etapa=Etapas.objects.get(pk=pk))
+               
+            inspeccion.save()
+            etapa = Etapas.objects.filter(pk=pk)
+            etapa.update(avance=inspeccion.avance)
+            return HttpResponseRedirect(reverse_lazy('lista_inspeccion', kwargs={'pk':pk}))
+    else:
+        form = inspeccionForm()
+    variables = RequestContext(request, {'form': form})
+
+    return render_to_response('planificacion/crear_inspeccion.html', variables)
