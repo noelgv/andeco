@@ -21,117 +21,118 @@
                   
                     
                   <div class="x_content">
-                    
-                    <table id="" class="table table-striped table-bordered jambo_table">
-                      <thead>
-                        <tr>
-                         
-                          <th>N°</th>
-                          <th>Region</th>
-                          <th>Municipio</th>
-                          <th>Nombre Proyecto</th>
-                          <th>Responsable Proyecto</th>
-                          <th>Responsable Seguimiento</th>
-                          <th>Porcentage Global</th>
-                          <th></th>
-                         
-                        </tr>
-                      </thead>
+                    <div class="table-responsive"> 
+                      <table id="" class="table table-striped table-bordered jambo_table" cellspacing="0" width="100%">
+                        <thead>
+                          <tr>
+                           
+                            <th>N°</th>
+                            <th>Region</th>
+                            <th>Municipio</th>
+                            <th>Nombre Proyecto</th>
+                            <th>Responsable Proyecto</th>
+                            <th>Responsable Seguimiento</th>
+                            <th>Porcentage Global</th>
+                            <th></th>
+                           
+                          </tr>
+                        </thead>
 
-                      <tbody>
-                        
-                        {% for convenios in object_list %}
-                            <tr>
-                              <td>{{forloop.counter}}</td>
-                              <td>
-                                {% if convenios.region == '1' %}
-                                  Metropolitana
-                                {% endif %}
-                                {% if convenios.region == '2' %}
-                                  Vallez
-                                {% endif %}
-                                {% if convenios.region == '3' %}
-                                  Tropico
-                                {% endif %}
-                                {% if convenios.region == '4' %}
-                                  Cono sur
-                                {% endif %}
-                                {% if convenios.region == '5' %}
-                                  Andina
-                                {% endif %}
-                        
+                        <tbody>
+                          
+                          {% for convenios in object_list %}
+                              <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>
+                                  {% if convenios.region == '1' %}
+                                    Metropolitana
+                                  {% endif %}
+                                  {% if convenios.region == '2' %}
+                                    Vallez
+                                  {% endif %}
+                                  {% if convenios.region == '3' %}
+                                    Tropico
+                                  {% endif %}
+                                  {% if convenios.region == '4' %}
+                                    Cono sur
+                                  {% endif %}
+                                  {% if convenios.region == '5' %}
+                                    Andina
+                                  {% endif %}
+                          
 
-                              </td>
-                              <td>{{ convenios.municipio}}</td>
-                              <td>{{ convenios.nombre_proyecto}}</td>
-                              <td>{{ convenios.responsable_proyecto}}</td>
-                              <td>{{ convenios.responsable_seguimiento}}</td>
-                              <td>
-                                  <div class="progress progress_sm">
-                                    <div class="progress-bar 
-                                    {% if convenios.porcentage_global > 0 and convenios.porcentage_global < 35 %}
-                                      progress-bar-danger
-                                    {% elif convenios.porcentage_global > 35 and  convenios.porcentage_global < 80  %}
-                                      progress-bar-warning
+                                </td>
+                                <td>{{ convenios.municipio}}</td>
+                                <td>{{ convenios.nombre_proyecto}}</td>
+                                <td>{{ convenios.responsable_proyecto}}</td>
+                                <td>{{ convenios.responsable_seguimiento}}</td>
+                                <td>
+                                    <div class="progress progress_sm">
+                                      <div class="progress-bar 
+                                      {% if convenios.porcentage_global > 0 and convenios.porcentage_global < 35 %}
+                                        progress-bar-danger
+                                      {% elif convenios.porcentage_global > 35 and  convenios.porcentage_global < 80  %}
+                                        progress-bar-warning
 
-                                    {% elif convenios.porcentage_global > 80 and convenios.porcentage_global <= 100 %}
-                                      progress-bar-success
-                                 
-                                    {% else %}
-                                      progress-bar-success
-                                    {% endif%}
-                                    " role="progressbar"
+                                      {% elif convenios.porcentage_global > 80 and convenios.porcentage_global <= 100 %}
+                                        progress-bar-success
                                    
-                                     data-transitiongoal='{{convenios.porcentage_global}}}'     >
-                                    
-                                    </div>
-                                  </div>
-                                  <small>{{convenios.porcentage_global}}% </small>
-                              </td>
-                              <td>
-                            
-                                <a href="/crear_etapa/{{ convenios.pk}}" class="btn btn-primary  btn-sm" data-toggle="tooltip" data-original-title="Etapas"><i class="fa fa-sitemap"></i></a>
-                               
-
-                                <a href="/reporte_gantt/{{ convenios.pk}}" class="btn btn-info btn-sm" data-toggle="tooltip" data-original-title="Reportes"><i class="fa fa-bar-chart-o"></i> </a>
-                               
-                                <a href="/editar_proyecto/{{convenios.id}}" class="btn btn-warning btn-sm" data-toggle="tooltip" data-original-title="Editar" ><i class="fa fa-pencil"></i></a>
-                                
-                                
-
-                                <a  class="btn btn-danger btn-sm" data-toggle="modal" data-original-title="Eliminar"  data-target=".modal-{{ convenios.id}}"><i class="fa fa-trash-o"></i> </a>
-
-                                <div class="modal fade modal-{{ convenios.id}}" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-                                  <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-
-                                      <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
-                                        </button>
-                                        <h4 class="modal-title" id="myModalLabel2">Eliminar</h4>
-                                      </div>
-                                      <div class="modal-body">
-                                        Esta seguro que  quiere eliminar "{{ convenios.nombre_proyecto}}"
-                                      </div>
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                      {% else %}
+                                        progress-bar-success
+                                      {% endif%}
+                                      " role="progressbar"
+                                     
+                                       data-transitiongoal='{{convenios.porcentage_global}}}'     >
                                       
-                                        <a href="/delete_proyect/{{convenios.id}}" class="btn btn-primary">Aceptar</a>
+                                      </div>
+                                    </div>
+                                    <small>{{convenios.porcentage_global}}% </small>
+                                </td>
+                                <td>
+                              
+                                  <a href="/crear_etapa/{{ convenios.pk}}" class="btn btn-primary  btn-sm" data-toggle="tooltip" data-original-title="Etapas"><i class="fa fa-sitemap"></i></a>
+                                 
+
+                                  <a href="/reporte_gantt/{{ convenios.pk}}" class="btn btn-info btn-sm" data-toggle="tooltip" data-original-title="Reportes"><i class="fa fa-bar-chart-o"></i> </a>
+                                 
+                                  <a href="/editar_proyecto/{{convenios.id}}" class="btn btn-warning btn-sm" data-toggle="tooltip" data-original-title="Editar" ><i class="fa fa-pencil"></i></a>
+                                  
+                                  
+
+                                  <a  class="btn btn-danger btn-sm" data-toggle="modal" data-original-title="Eliminar"  data-target=".modal-{{ convenios.id}}"><i class="fa fa-trash-o"></i> </a>
+
+                                  <div class="modal fade modal-{{ convenios.id}}" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog modal-lg">
+                                      <div class="modal-content">
+
+                                        <div class="modal-header">
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                                          </button>
+                                          <h4 class="modal-title" id="myModalLabel2">Eliminar</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                          Esta seguro que  quiere eliminar "{{ convenios.nombre_proyecto}}"
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                        
+                                          <a href="/delete_proyect/{{convenios.id}}" class="btn btn-primary">Aceptar</a>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                              </td>
+                                </td>
 
-                              
-                            </tr>
+                                
+                              </tr>
 
-                        {% endfor %}
-                        
-                   
-                        
-                      </tbody>
-                    </table>
+                          {% endfor %}
+                          
+                     
+                          
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
               
               </div>

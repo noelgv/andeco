@@ -39,27 +39,27 @@
       <div class="login_wrapper">
         <div class="animate form login_form">
           <section class="login_content">
-            <form method="post" class="form-horizontal form-label-left" novalidate>{% csrf_token %}
+            <form method="post"  novalidate>{% csrf_token %}
               <h1>Login</h1>
 
-              <div class="item form-group">
+              
              
-                <div class="col-md-12">
-                  {{form.username|add_class:"form-control"|attr:"placeholder:username"|attr:"required:required"}}
+                <div >
+                  {{form.username|add_class:"form-control"|attr:"placeholder:Usuario"|attr:"required:required"}}
                 </div>
-              </div>
-              <div class="item form-group">
              
-                <div class="col-md-12">
-                  {{form.password|add_class:"form-control"|attr:"placeholder:Password"|attr:"required:required"}}
+              
+             
+                <div >
+                  {{form.password|add_class:"form-control"|attr:"placeholder:Contraseña"|attr:"required:required"}}
                 </div>
-              </div>
+              
 
              
            
               <div>
                 <br>
-                <button class="btn btn-default submit" type="submit">login</button>
+                <button class="btn btn-primary submit btn-sm" type="submit"> <i class="fa fa-unlock-alt"></i>  Ingresar</button>
                
               </div>
 

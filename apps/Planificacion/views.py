@@ -127,7 +127,7 @@ def CrearEtapa(request, pk):
         print 'guardoooooooo'
         return HttpResponse(json.dumps(data), content_type='application/json')
     else:
-        variables = RequestContext(request, {'pk': pk})
+        variables = RequestContext(request, {'pk': pk, 'proyecto': Proyectos.objects.get(id=pk)})
         return render_to_response('planificacion/crear_etapa.html', variables)
 
 
@@ -225,3 +225,11 @@ def CrearInspeccion(request, pk):
     variables = RequestContext(request, {'form': form})
 
     return render_to_response('planificacion/crear_inspeccion.html', variables)
+
+
+def eliminarInspeccion(request, id):
+    p = Inspeccion.objects.get(id=id)
+    pk = p.etapa.pk
+    p.delete()
+    return HttpResponseRedirect(reverse_lazy('lista_inspeccion', kwargs={'pk':pk}))
+

@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^lista_inspeccion/(?P<pk>\d+)$', 'apps.Planificacion.views.listaInspeccion', name='lista_inspeccion'),
     url(r'^ajax_inspeccion/(?P<pk>\d+)$', 'apps.Planificacion.views.listaInspeccionAjax', name='ajax_inspeccion'),
     url(r'^crear_inspeccion/(?P<pk>\d+)$', 'apps.Planificacion.views.CrearInspeccion', name='crear_inspeccion'),
+    url(r'^delete_inspeccion/(?P<id>\d+)$', 'apps.Planificacion.views.eliminarInspeccion', name='delete_inspeccion'),
 
 
 
