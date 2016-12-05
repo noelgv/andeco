@@ -2,11 +2,13 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
@@ -24,17 +26,28 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
+            name='Inspeccion',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('fecha', models.DateField()),
+                ('hora', models.TimeField()),
+                ('objectivo', models.CharField(max_length=200)),
+                ('avance', models.CharField(max_length=200)),
+                ('etapa', models.ForeignKey(blank=True, to='Planificacion.Etapas', null=True)),
+            ],
+        ),
+        migrations.CreateModel(
             name='Proyectos',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('region', models.CharField(max_length=200)),
                 ('municipio', models.CharField(max_length=200)),
                 ('nombre_proyecto', models.CharField(max_length=200)),
-                ('responsable_proyecto', models.CharField(max_length=200)),
                 ('responsable_seguimiento', models.CharField(max_length=200)),
-                ('porcentage_global', models.CharField(max_length=200, null=True, blank=True)),
-                ('fecha_inicio', models.DateField()),
-                ('fecha_conclucion', models.DateField()),
+                ('porcentage_global', models.IntegerField(null=True, blank=True)),
+                ('fecha_inicio', models.DateField(null=True, blank=True)),
+                ('fecha_conclucion', models.DateField(null=True, blank=True)),
+                ('responsable_proyecto', models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True)),
             ],
         ),
         migrations.CreateModel(

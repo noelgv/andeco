@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>! | </title>
+    <title>Amdeco </title>
 
     <!-- Bootstrap -->
 	<link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css"%}">
@@ -23,6 +23,8 @@
   <link rel="stylesheet" type="text/css" href="{% static "css/ion.rangeSlider.skinFlat.css"%}">
 	<link rel="stylesheet" type="text/css" href="{% static "css/jqvmap.min.css"%}">
 	<link rel="stylesheet" type="text/css" href="{% static "css/custom.min.css"%}">
+  <link rel="stylesheet" type="text/css" href="{% static "css/jquery.mediaTable.css"%}">
+
 
   <script type="text/javascript" src="http://127.0.0.1:35729/livereload.js"></script>
   <style>
@@ -58,33 +60,34 @@
             <!-- /menu profile quick info -->
 
             <br />
-
+            {% load permission_tags %}
             <!-- sidebar menu -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
                 
                 <ul class="nav side-menu">
-                  <li><a><i class="fa fa-home"></i> Inicio<span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="index.html">Dashboard</a></li>
-                      <li><a href="index2.html">Dashboard2</a></li>
-                      <li><a href="index3.html">Dashboard3</a></li>
-                    </ul>
+                  <li><a href="/"><i class="fa fa-home"></i> Inicio</a>
+                    
                   </li>
+                  {% if user|has_role:'admin_sistema' %}
+                  <li><a href="/lista_usuarios"><i class="fa fa-group"></i> Usuarios</a>
+                  {% endif %}
+                  
+                  {% if  user.area == 'Finanzas' %}
                   <li><a href="/finansas"><i class="fa fa-edit"></i> Finanzas</a>
-                   
+                  {% endif %}
+
                   </li>
-                  <li><a><i class="fa fa-desktop"></i> Planificacion <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="/lista_proyectos">Proyectos</a></li>
-                      
-                    </ul>
+                  {% if user.area == 'Planificacion' %}
+                  <li><a href="/lista_proyectos"><i class="fa fa-archive"></i> Proyectos </a>
+                    
                   </li>
+                  {% endif %}
                     
                   
 
                   
-                  <li><a><i class="fa fa-bar-chart-o"></i> Data Presentation <span class="fa fa-chevron-down"></span></a>
+                <!--  <li><a><i class="fa fa-bar-chart-o"></i> Data Presentation <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="chartjs.html">Chart JS</a></li>
                       <li><a href="chartjs2.html">Chart JS2</a></li>
@@ -92,7 +95,7 @@
                       <li><a href="echarts.html">ECharts</a></li>
                       <li><a href="other_charts.html">Other Charts</a></li>
                     </ul>
-                  </li>
+                  </li> -->
                   
                 </ul>
               </div>
@@ -127,7 +130,16 @@
               <div class="nav toggle">
                 <a id="menu_toggle"><i class="fa fa-bars"></i></a>
               </div>
-
+              <div class="nav navbar-nav">
+                <h3>
+                  {% if user.area %}
+                    {{user.area}}
+                  {% else %}
+                    Administrador
+                  {% endif %}
+                </h3>
+              </div>
+              
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -196,7 +208,7 @@
   
 
     <script src="{% static "js/custom.min.js"%}"></script> 
-   
+    <script src="{% static "js/jquery.mediaTable.js"%}"></script> 
   
     <script>
       $(document).ready(function() {

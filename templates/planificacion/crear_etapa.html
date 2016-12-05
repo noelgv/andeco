@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block contenido %}
+{% load permission_tags %}
   <!-- page content -->
         <div class="right_col" role="main">
           <div class="">
@@ -17,7 +18,9 @@
                   <div class="x_title">
                     <!-- modals -->
                   <!-- Large modal -->
+                  {% if user|has_role:'jefe_area' %}
                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Agregar Etapa </button>
+                  {% endif %}
 
                   
                   <h3 class="titulo-proyecto">Proyecto: {{proyecto.nombre_proyecto}}</h3>

@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+{% block contenido %}
+{% load widget_tweaks %}
+
+
+<div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Registro Usuario</h3>
+              </div>         
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                
+                  <div class="x_content">
+                    <br />
+                    <form id="demo-form2"  class="form-horizontal form-label-left" method="post" novalidate="" data-parsley-validate="">
+						        {% csrf_token %}
+                     <fieldset>
+                      <legend>Datos personales</legend>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Nombre<span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          {{user_form.nombre|add_class:"form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"|attr:"required:required"}}
+                          {% if user_form.errors.nombre %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{user_form.errors.nombre|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Primer apellido<span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          {{user_form.p_apellido|add_class:"form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"|attr:"required:required"}}
+                          {% if user_form.errors.p_apellido %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{user_form.errors.p_apellido|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Segundo apellido<span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          {{user_form.s_apellido|add_class:"form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
+                          {% if user_form.errors.s_apellido %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{user_form.errors.s_apellido|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                        </div>
+                      </div>
+                    </fieldset>
+                    <fieldset>
+                    <legend>Datos de usuario</legend>
+						         
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Usuario<span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          {{user_form.username|add_class:"form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"|attr:"required:required"}}
+                          {% if user_form.errors.username %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{user_form.errors.username|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Contraseña<span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          {{user_form.password|add_class:"form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"|attr:"required:required"}}
+                          {% if user_form.errors.password %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{user_form.errors.password|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Contraseña (confirmación)<span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          {{user_form.password2|add_class:"form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"|attr:"required:required"|attr:"data-parsley-equalto:#id_password"}}
+                          {% if user_form.errors.password2 %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{user_form.errors.password2|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Rol <span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          {{user_form.roles|add_class:"form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"|attr:"required:required"}}
+                          {% if user_form.errors.roles %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{user_form.errors.roles|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                        </div>
+                      </div>
+
+                       <div class="form-group area">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Area <span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          {{user_form.area|add_class:"form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
+                          {% if user_form.errors.area %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{user_form.errors.area|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                        </div>
+                      </div>
+                    </fieldset>
+
+                     
+
+                      
+
+                      
+
+                      <div class="ln_solid"></div>
+                      <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                          <button type="submit" class="btn btn-primary">Cancelar</button>
+                          <button type="submit" class="btn btn-success">Guardar</button>
+                        </div>
+                      </div>
+
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+           
+          </div>
+        </div>
+
+
+{% endblock %}
+{% block js %}
+	<script>
+      $('.area').hide();
+      $('#id_roles').on('change', function() {
+        console.log( this.value );
+        if (this.value == 'JefeArea' || this.value == 'Supervisor') {
+          $('.area').show();
+          $('#id_area').attr('required', 'required');
+        }else{
+          $('.area').hide();
+          $("#id_area").removeAttr("required");
+        }
+      })
+
+
+      // initialize the validator function
+      validator.message.date = 'not a real date';
+
+      // validate a field on "blur" event, a 'select' on 'change' event & a '.reuired' classed multifield on 'keyup':
+      $('form')
+        .on('blur', 'input[required], input.optional, select.required', validator.checkField)
+        .on('change', 'select.required', validator.checkField)
+        .on('keypress', 'input[required][pattern]', validator.keypress);
+
+      $('.multi.required').on('keyup blur', 'input', function() {
+        validator.checkField.apply($(this).siblings().last()[0]);
+      });
+
+      $('form').submit(function(e) {
+        e.preventDefault();
+        var submit = true;
+
+        // evaluate the form using generic validaing
+        if (!validator.checkAll($(this))) {
+          submit = false;
+        }
+
+        if (submit)
+          this.submit();
+
+        return false;
+      });
+
+
+
+
+    </script>
+{% endblock js %}

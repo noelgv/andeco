@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block contenido %}
+{% load permission_tags %}
+  <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              
+             
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+
+              <div class="col-md-12 col-sm-12 col-xs-12">
+           
+              <a href="/user_create" class="btn btn-success">Crear Usuario</a>
+             
+             
+
+                <div class="x_panel">
+                  
+                    
+                  <div class="x_content">
+                    <div class="table-responsive"> 
+                      <table id="" class="table table-striped table-bordered jambo_table mediaTable" cellspacing="0" width="100%">
+                        <thead>
+                          <tr>
+                           
+                            <th class="essential persist">N°</th>
+                            <th class="oculto">Usuario</th>
+                            <th>Area</th>
+                            
+                            <th class="essential persist"></th>
+                           
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          
+                          {% for u in usuarios %}
+                              <tr>
+                                <td>{{forloop.counter}}</td>
+                               
+                                <td>{{ u.username}}</td>
+                                <td>{{ u.area}}</td>
+                                
+                              
+                                 
+                                <td>
+                                  <a href="/editar_proyecto/{{convenios.pk}}" class="btn btn-warning btn-sm" data-toggle="tooltip" data-original-title="Editar" ><i class="fa fa-pencil"></i></a>
+                              
+                                  
+                                  
+                                  <a  class="btn btn-danger btn-sm" data-toggle="modal" data-original-title="Eliminar"  data-target=".modal-{{ u.pk}}"><i class="fa fa-trash-o"></i> </a>
+
+                                  <div class="modal fade modal-{{ u.pk}}" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog modal-lg">
+                                      <div class="modal-content">
+
+                                        <div class="modal-header">
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                                          </button>
+                                          <h4 class="modal-title" id="myModalLabel2">Eliminar</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                          Esta seguro que  quiere eliminar "{{ u.username}}"
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                        
+                                          <a href="/delete_usuario/{{u.pk}}" class="btn btn-primary">Aceptar</a>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                 
+                                </td>
+
+                                
+                              </tr>
+
+                          {% endfor %}
+                          
+                     
+                          
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+              
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
+{% endblock %}
+{% block js %}
+  <script>
+  
+  </script>
+{% endblock js %}

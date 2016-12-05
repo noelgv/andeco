@@ -1,11 +1,14 @@
 from django.db import models
+from django.conf import settings
+from apps.users.models import User
 
 
 class Proyectos(models.Model):
 	region = models.CharField(max_length=200)
 	municipio = models.CharField(max_length=200)
 	nombre_proyecto = models.CharField(max_length=200)
-	responsable_proyecto = models.CharField(max_length=200)
+	# responsable_proyecto = models.CharField(max_length=200)
+	responsable_proyecto = models.ForeignKey(User, null=True, blank=True)
 	responsable_seguimiento = models.CharField(max_length=200)
 	porcentage_global = models.IntegerField(null=True, blank=True)
 	fecha_inicio = models.DateField(null=True, blank=True)

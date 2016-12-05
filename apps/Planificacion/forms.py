@@ -1,4 +1,5 @@
 from django import forms 
+from apps.users.models import User
 
 
 class responsablesForm(forms.Form):
@@ -29,13 +30,14 @@ class proyectosForm(forms.Form):
 	regiones = forms.ChoiceField(choices=lista_region)
 	municipios = forms.CharField(max_length=100)
 	nombre_proyecto = forms.CharField()
-	responsable_proyecto = forms.CharField()
+	# responsable_proyecto = forms.CharField()
+	responsable_proyecto = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=False, is_superuser=False, area='Planificacion'))
 	responsable_seguimiento = forms.CharField()
 	fecha_inicio = forms.CharField()
 	fecha_conclucion = forms.CharField()
 
 
 class inspeccionForm(forms.Form):
-	objetivo = forms.CharField(max_length=100)
+	objetivo = forms.CharField(max_length=100, widget=forms.Textarea(attrs={'rows':3}))
 	avance = forms.CharField()
 	

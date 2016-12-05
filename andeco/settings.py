@@ -37,14 +37,16 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'apps.users',
     'apps.inicio',
     'apps.finanzas',
     'apps.juridica',
-    'apps.municipios',
+
     'apps.Planificacion',
 
     'widget_tweaks',
     'django_extensions',
+    'rolepermissions',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -82,10 +84,21 @@ WSGI_APPLICATION = 'andeco.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql', 
+        'NAME': 'amdeco',
+        'USER': 'root',
+        'PASSWORD': '1',
+        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'PORT': '3306',
     }
 }
 
@@ -115,4 +128,8 @@ STATICFILES_DIRS = (
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 STATIC_ROOT = 'staticfiles'
+
+AUTH_USER_MODEL = 'users.User'
+
+ROLEPERMISSIONS_MODULE = 'apps.inicio.roles'
 

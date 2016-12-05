@@ -82,6 +82,8 @@
                             <small>{{ins.avance}}% </small>
                           </td>
                           <td>
+                            <a href="/editar_inspeccion/{{ins.pk}}" class="btn btn-warning btn-sm" data-toggle="tooltip" data-original-title="Editar" ><i class="fa fa-pencil"></i></a>
+
                             <a  class="btn btn-danger btn-sm" data-toggle="modal" data-original-title="Eliminar"  data-target=".modal-{{ ins.id}}"><i class="fa fa-trash-o"></i> </a>
 
                                   <div class="modal fade modal-{{ ins.id}}" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">

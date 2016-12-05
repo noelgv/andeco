@@ -11,7 +11,9 @@ import json
 from decimal import Decimal, ROUND_HALF_UP
 from django.core.serializers.json import DjangoJSONEncoder
 import datetime, time
-from django import forms 
+from django import forms
+from apps.inicio.roles import *
+from rolepermissions.verifications import has_role
 
 
 # Create your views here.
@@ -44,12 +46,20 @@ class ListadoResponsables(ListView):
 
 
 def listadoProyectos(request):
+    print request.user.pk
+    # if request.user.is_authenticated():
+    #     if has_role(request.user, [Operador, 'admin1']):
+    #         proyectos = Proyectos.objects.filter(responsable_proyecto=request.user)
+    #     else:
+    #         proyectos = Proyectos.objects.all()
+    # else:
     proyectos = Proyectos.objects.all()
-    porcentage = 0
+
     data = []
     for p in proyectos:
         etapas = Etapas.objects.filter(proyecto=p.pk)
         avance = 0
+        porcentage = 0
         cant_etapa = 0
         for e in etapas:
             cant_etapa = cant_etapa + 1
@@ -61,7 +71,12 @@ def listadoProyectos(request):
             porcentage = avance / cant_etapa
             proyecto = Proyectos.objects.filter(pk=p.pk)
             proyecto.update(porcentage_global=porcentage)
-        redondeado = Decimal(porcentage.quantize(Decimal('.01'), rounding=ROUND_HALF_UP))
+
+        if porcentage != 0:
+            redondeado = Decimal(porcentage.quantize(Decimal('.01'), rounding=ROUND_HALF_UP))
+        else:
+            redondeado = 0
+
         data.append({'pk': p.pk, 'region': p.region, 'municipio': p.municipio, 'nombre_proyecto': p.nombre_proyecto, 'responsable_proyecto': p.responsable_proyecto, 'responsable_seguimiento': p.responsable_seguimiento, 'porcentage_global': redondeado })
 
     variables = RequestContext(request, {'object_list': data})
@@ -75,9 +90,9 @@ def Crearproyecto(request):
         form = proyectosForm(request.POST)
         if form.is_valid():
             proyectos = Proyectos(
-                nombre = form.cleaned_data['nombre'],
-                codigo = form.cleaned_data['codigo'],
-                porcentaje_global = form.cleaned_data['porcentaje_global'])
+                nombre=form.cleaned_data['nombre'],
+                codigo=form.cleaned_data['codigo'],
+                porcentaje_global=form.cleaned_data['porcentaje_global'])
             proyectos.save()
             return HttpResponseRedirect(reverse_lazy('listado_responsables'))
     else:
@@ -135,7 +150,7 @@ def listaEtapas(request, pk):
     etapas = Etapas.objects.filter(proyecto=pk)
     data = []
     for etapa in etapas:
-        data.append({'pk': etapa.pk, 'fecha_inicio': etapa.fecha_inicio, 'fecha_conclucion': etapa.fecha_conclucion, 'nombre_etapa': etapa.nombre_etapa, 'avance': etapa.avance, 'dias': etapa.dias, 'observaciones': etapa.observaciones, 'informe': etapa.informe, 'responsable': etapa.proyecto.responsable_proyecto, 'seguimiento': etapa.proyecto.responsable_seguimiento, 'proyecto': etapa.proyecto.nombre_proyecto})
+        data.append({'pk': etapa.pk, 'fecha_inicio': etapa.fecha_inicio, 'fecha_conclucion': etapa.fecha_conclucion, 'nombre_etapa': etapa.nombre_etapa, 'avance': etapa.avance, 'dias': etapa.dias, 'observaciones': etapa.observaciones, 'informe': etapa.informe, 'responsable': etapa.proyecto.responsable_proyecto.username, 'seguimiento': etapa.proyecto.responsable_seguimiento, 'proyecto': etapa.proyecto.nombre_proyecto})
 
     json_data = json.dumps(data, cls=DjangoJSONEncoder)
     return HttpResponse(json_data, content_type="application/json")
@@ -215,7 +230,7 @@ def CrearInspeccion(request, pk):
                 objectivo=form.cleaned_data['objetivo'],
                 avance=form.cleaned_data['avance'],
                 etapa=Etapas.objects.get(pk=pk))
-               
+
             inspeccion.save()
             etapa = Etapas.objects.filter(pk=pk)
             etapa.update(avance=inspeccion.avance)
@@ -230,6 +245,35 @@ def CrearInspeccion(request, pk):
 def eliminarInspeccion(request, id):
     p = Inspeccion.objects.get(id=id)
     pk = p.etapa.pk
+    
     p.delete()
+    i = Inspeccion.objects.last()
+    etapa = Etapas.objects.filter(pk=pk)
+    if i:
+        etapa.update(avance=i.avance)
+    else:
+        etapa.update(avance=0)
+
     return HttpResponseRedirect(reverse_lazy('lista_inspeccion', kwargs={'pk':pk}))
 
+
+class EditInspecion(UpdateView):
+    template_name = "planificacion/edit_inspeccion.html"
+    model = Inspeccion
+    fields = ['objectivo', 'avance']
+   
+    def get_success_url(self):
+       
+        e = Inspeccion.objects.get(pk=self.kwargs['pk'])
+
+        i = Inspeccion.objects.last()
+        etapa = Etapas.objects.filter(pk=e.etapa.pk)
+        etapa.update(avance=i.avance)
+
+        return reverse_lazy('lista_inspeccion', kwargs={'pk': e.etapa.pk})
+
+    def get_form(self, form_class):
+        form = super(EditInspecion, self).get_form(form_class)
+        form.fields['objectivo'].widget = forms.Textarea(attrs={'rows':3})
+        
+        return form
