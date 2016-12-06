@@ -11,12 +11,18 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='contratos',
+            name='proyectoFinanzas',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('codigo', models.CharField(max_length=54)),
-                ('unidad', models.CharField(max_length=54)),
-                ('descripcion', models.CharField(max_length=64)),
+                ('codigo', models.CharField(max_length=200)),
+                ('nombre_proyecto', models.CharField(max_length=200)),
+                ('region', models.CharField(max_length=200)),
+                ('municipio', models.CharField(max_length=200)),
+                ('responsable_proyecto', models.CharField(max_length=200)),
+                ('fecha_inicio', models.DateField(null=True, blank=True)),
+                ('fecha_conclucion', models.DateField(null=True, blank=True)),
+                ('objetivo', models.CharField(max_length=200)),
+                ('avance', models.IntegerField(null=True, blank=True)),
             ],
         ),
     ]

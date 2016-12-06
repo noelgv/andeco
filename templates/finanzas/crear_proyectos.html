@@ -1,0 +1,331 @@
+{% extends "base.html" %}
+{% block contenido %}
+{% load widget_tweaks %}
+
+
+<div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Registro Proyecto</h3>
+              </div>         
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                
+                  <div class="x_content">
+                    <br />
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post">
+                    {% csrf_token %}
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Codigo<span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          
+                          {{form.codigo|add_class:" form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
+                          {% if form.errors.codigo %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{form.errors.codigo|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nombre proyecto<span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          
+                          {{form.nombre_proyecto|add_class:" form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
+                          {% if form.errors.nombre_proyecto %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{form.errors.nombre_proyecto|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Region<span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          
+                          {{form.region|add_class:" form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
+                          {% if form.errors.region %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{form.errors.region|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Municipio<span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          
+                          <select class="form-control col-md-7 col-xs-12 {% if form.errors.municipio %}parsley-error{% endif %}" id="id_municipio" name="municipio">
+                            <option value="">Seleccione el municipio</option>
+                          </select>
+                          {% if form.errors.municipio %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{form.errors.municipio|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Responsable Proyecto<span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          {{form.responsable_proyecto|add_class:"form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
+                          {% if form.errors.responsable_proyecto %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{form.errors.responsable_proyecto|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                        </div>
+                      </div>
+
+
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Fecha de Inicio<span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          
+                          {{form.fecha_inicio|add_class:"date-picker form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
+                          {% if form.errors.fecha_inicio %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{form.errors.fecha_inicio|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Fecha de Conclucion<span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          
+                          {{form.fecha_conclucion|add_class:"date-picker form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
+                          {% if form.errors.fecha_conclucion %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{form.errors.fecha_conclucion|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Objetivo<span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          
+                          {{form.objetivo|add_class:" form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
+                          {% if form.errors.objetivo %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{form.errors.objetivo|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Avance<span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          
+                          {{form.avance|add_class:" form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
+                          {% if form.errors.avance %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{form.errors.avance|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                        </div>
+                      </div>
+
+                      <div class="ln_solid"></div>
+                      <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                          <button type="submit" class="btn btn-primary">Cancelar</button>
+                          <button type="submit" class="btn btn-success">Guardar</button>
+                        </div>
+                      </div>
+
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+           
+
+         
+
+
+
+           
+          </div>
+        </div>
+
+
+{% endblock %}
+{% block js %}
+  <script>
+      
+        
+
+
+         $('#id_fecha_inicio').daterangepicker({
+          singleDatePicker: true,
+          calender_style: "picker_4",
+          locale: {
+            format: 'YYYY-MM-DD'
+          }
+        }, function(start, end, label) {
+          console.log(start.toISOString(), end.toISOString(), label);
+        });
+
+        $('#id_fecha_conclucion').daterangepicker({
+          singleDatePicker: true,
+          calender_style: "picker_4",
+          locale: {
+            format: 'YYYY-MM-DD'
+          }
+        }, function(start, end, label) {
+          console.log(start.toISOString(), end.toISOString(), label);
+        });
+
+        // if ($("#id_region").val() == ''){
+          
+        //   var options = $(this).data('options', $('#id_municipios option').clone());
+        //   $('#id_municipios').html(options);
+        // }else{
+        //   alert('sss');
+        // }
+
+        // $("#id_municipios").hide();
+
+        // $("#id_regiones").change(function() {
+        //   if ($(this).data('options') == undefined) {
+        //     /*Taking an array of all options-2 and kind of embedding it on the select1*/
+        //     $(this).data('options', $('#id_municipios option').clone());
+            
+        //   }
+        //   var id = $(this).val();
+        //   var options = $(this).data('options').filter('[value=' + id + ']');
+        //   $('#id_municipios').html(options);
+        // });
+
+
+        var Metropolitana = [
+          {display: "Cochabamba", value: "cochabamba"},
+          {display: "Colcapirhua", value: "Colcapirhua"},
+          {display: "Quillacollo", value: "Quillacollo"},
+          {display: "Sacaba", value: "Sacaba"},
+          {display: "Sipe Sipe", value: "Sipe Sipe"},
+          {display: "Vinto", value: "Vinto"}];
+
+        var Vallez = [
+          {display:"Punata", value:"Punata"},
+          {display:"Capinota", value:"Capinota"},
+          {display:"Santivañes", value:"Santivañes"},
+          {display:"Arani", value:"Arani"},
+          {display:"Villa Rivero", value:"Villa Rivero"},
+          {display:"Cliza", value:"Cliza"},
+          {display:"Toco", value:"Toco"},
+          {display:"Tolata", value:"Tolata"},
+          {display:"Tarata", value:"Tarata"},
+          {display:"Anzaldo", value:"Anzaldo"},
+          {display:"Sacabamba", value:"Sacabamba"},
+          {display:"Arbieto", value:"Arbieto"},
+          {display:"Tacahi", value:"Tacahi"},
+          {display:"Villa Gualberto Villarroel", value:"Villa Gualberto Villarroel"},
+          {display:"San Benito", value:"San Benito"}];
+
+          var Tropico = [
+          {display:"Entre Rios", value:"Entre Rios"},
+          {display:"Shinahota", value:"Shinahota"},
+          {display:"Colomi", value:"Colomi"},
+          {display:"Puerto Villarroel", value:"Puerto Villarroel"},
+          {display:"Villa Tunari", value:"Villa Tunari"},
+          {display:"Chimore", value:"Chimore"}];
+
+          var Conosur = [
+          {display:"Vacas", value:"Vacas"},
+          {display:"Tiraque", value:"Tiraque"},
+          {display:"Alalay", value:"Alalay"},
+          {display:"Mizque", value:"Mizque"},
+          {display:"Aiquile", value:"Aiquile"},
+          {display:"Vila Vila", value:"Vila Vila"},
+          {display:"Pojo", value:"Pojo"},
+          {display:"Omereque", value:"Omereque"},
+          {display:"Totora", value:"Totora"},
+          {display:"Pocona", value:"Pocona"},
+          {display:"Pasorapa", value:"Pasorapa"}];
+
+           var Andina = [
+          {display:"Bolivar", value:"Bolivar"},
+          {display:"Cocapata", value:"Cocapata"},
+          {display:"independencia", value:"independencia"},
+          {display:"Morochata", value:"Morochata"},
+          {display:"Tapacari", value:"Tapacari"},
+          {display:"Tacopaya", value:"Tacopaya"},
+          {display:"Sicaya", value:"Sicaya"},
+          {display:"Arque", value:"Arque"}];
+         
+        
+            //If parent option is changed
+        $("#id_region").change(function() {
+                var parent = $(this).val(); //get option value from parent 
+
+                switch(parent){ //using switch compare selected option and populate child
+                        case '1':
+                        list(Metropolitana);
+                        break;  
+                        case '2':
+                        list(Vallez);
+                        break;
+                        case '3':
+                        list(Tropico);
+                        break;
+                        case '4':
+                        list(Conosur);
+                        break;
+                        case '5':
+                        list(Andina);
+                        break;
+                    default: //default child option is blank
+                        $("#id_municipio").html('');  
+                        break;
+                }
+          });
+          //function to populate child select box
+          function list(array_list){
+               //reset child options
+               $("#id_municipio").html(""); 
+              $(array_list).each(function (i) { //populate child options 
+                  console.log(i);
+         
+
+              $("#id_municipio").append("<option value=\""+array_list[i].value+"\">"+array_list[i].display+"</option>");
+             
+
+              });
+          }
+        
+
+
+
+    </script>
+{% endblock js %}
