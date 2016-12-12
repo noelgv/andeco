@@ -74,10 +74,13 @@
                   {% endif %}
                   
                   {% if  user.area == 'Finanzas' %}
-                  <li><a href="/finansas"><i class="fa fa-edit"></i> Finanzas</a>
-                  {% endif %}
-
+                  <li><a href="/lista_finanzas"><i class="fa fa-edit"></i> Trabajos realizados</a>
                   </li>
+                  <li><a href="/lista_finanzas"><i class="fa fa-edit"></i> Asistencia tecnica</a>
+                  </li>
+                  <li><a href="/lista_finanzas"><i class="fa fa-edit"></i> Cursos</a>
+                  </li>
+                  {% endif %}
                   {% if user.area == 'Planificacion' %}
                   <li><a href="/lista_proyectos"><i class="fa fa-archive"></i> Proyectos </a>
                     
