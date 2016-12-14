@@ -10,13 +10,13 @@
             </div>
 
             <div class="clearfix"></div>
-            <h3 style="text-align: center;">Trabajos realizados</h3>
+            <h3 style="text-align: center;">Asistencia tecnica</h3>
 
             <div class="row">
 
               <div class="col-md-12 col-sm-12 col-xs-12">
               {% if user|has_role:'jefe_area' %}
-              <a href="/proyectoFinanzas" class="btn btn-success">Nuevo</a>
+              <a href="/crear_asistencia" class="btn btn-success">Nuevo</a>
               {% endif %}
              
 
@@ -24,7 +24,6 @@
                   
                     
                   <div class="x_content">
-
                     <div class="table-responsive"> 
                       <table id="" class="table table-striped table-bordered jambo_table mediaTable" cellspacing="0" width="100%">
                         <thead>
@@ -33,10 +32,9 @@
                             <th class="essential persist">N°</th>
                             <th class="oculto">Region</th>
                             <th>Municipio</th>
-                            <th>Nombre Proyecto</th>
-                            <th>Responsable Proyecto</th>
-                            <th style="display:none">Responsable Seguimiento</th>
-                            <th>Avance</th>
+                            <th>Nombre</th>
+                            <th>Responsable</th>
+                            <th>Estado</th>
                             <th class="essential persist"></th>
                            
                           </tr>
@@ -44,7 +42,7 @@
 
                         <tbody>
                           
-                          {% for convenios in proyectos %}
+                          {% for convenios in asistencia %}
                               <tr>
                                 <td>{{forloop.counter}}</td>
                                 <td>
@@ -67,36 +65,15 @@
 
                                 </td>
                                 <td>{{ convenios.municipio}}</td>
-                                <td>{{ convenios.nombre_proyecto}}</td>
-                                <td>{{ convenios.responsable_proyecto}}</td>
-                                <td style="display: none;">{{ convenios.responsable_seguimiento}}</td>
-                                <td>
-                                    <div class="progress progress_sm">
-                                      <div class="progress-bar 
-                                      {% if convenios.avance > 0 and convenios.avance < 35 %}
-                                        progress-bar-danger
-                                      {% elif convenios.avance > 35 and  convenios.avance < 80  %}
-                                        progress-bar-warning
-
-                                      {% elif convenios.avance > 80 and convenios.avance <= 100 %}
-                                        progress-bar-success
-                                   
-                                      {% else %}
-                                        progress-bar-success
-                                      {% endif%}
-                                      " role="progressbar"
-                                     
-                                       data-transitiongoal='{{convenios.avance}}}'     >
-                                      
-                                      </div>
-                                    </div>
-                                    <small>{{convenios.avance}}% </small>
-                                </td>
+                                <td>{{ convenios.nombre}}</td>
+                                <td>{{ convenios.responsable}}</td>
+                                <td>{{ convenios.estado}}</td>
+                                
                                 <td>
                               
                                 
                                   {% if user|has_role:'jefe_area' %}
-                                  <a href="/editar_trabajo/{{convenios.pk}}" class="btn btn-warning btn-sm" data-toggle="tooltip" data-original-title="Editar" ><i class="fa fa-pencil"></i></a>
+                                  <a href="/editar_asistencia/{{convenios.pk}}" class="btn btn-warning btn-sm" data-toggle="tooltip" data-original-title="Editar" ><i class="fa fa-pencil"></i></a>
                                   {%endif%}
                                   
                                   {% if user|has_role:'jefe_area' %}
@@ -117,7 +94,7 @@
                                         <div class="modal-footer">
                                           <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                         
-                                          <a href="/delete_trabajo/{{convenios.pk}}" class="btn btn-primary">Aceptar</a>
+                                          <a href="/delete_asistencia/{{convenios.pk}}" class="btn btn-primary">Aceptar</a>
                                         </div>
                                       </div>
                                     </div>
