@@ -25,3 +25,4 @@ django-extensions==1.5.9
 XlsxWriter==0.7.3
 
 django-preventconcurrentlogins==0.7
+django-taggit==0.21.3

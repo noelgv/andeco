@@ -3,7 +3,7 @@ from django.views.generic import TemplateView, UpdateView
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse_lazy
 from .models import proyectoFinanzas, Asistencia, Cursos
-from .forms import createProyectForm, AsistenciaForm, CursoForm
+from .forms import createProyectForm, AsistenciaForm, CursoForm, CursoEditForm
 from django.template import RequestContext
 from django import forms
 
@@ -78,7 +78,6 @@ def createAsistencia(request):
         if form.is_valid():
             print 'sdfdsfdsfdsfds'
             asistencia = Asistencia(
-                codigo=form.cleaned_data['codigo'],
                 nombre=form.cleaned_data['nombre'],
                 region=form.cleaned_data['region'],
                 municipio=form.cleaned_data['municipio'],
@@ -105,13 +104,14 @@ def eliminarAsistencia(request, id):
 class EditAsistencia(UpdateView):
     template_name = "finanzas/edit_asistencia.html"
     model = Asistencia
-    fields = ['codigo', 'nombre', 'region', 'municipio', 'responsable', 'fecha_inicio', 'fecha_conclucion', 'objetivo', 'estado']
+    fields = ['nombre', 'region', 'municipio', 'responsable', 'fecha_inicio', 'fecha_conclucion', 'objetivo', 'estado']
     success_url = reverse_lazy('lista_asistencia')
 
     def get_form(self, form_class):
         form = super(EditAsistencia, self).get_form(form_class)
         form.fields['fecha_inicio'].widget = forms.DateInput(format='%Y-%m-%d')
         form.fields['fecha_conclucion'].widget = forms.DateInput(format='%Y-%m-%d')
+        form.fields['objetivo'].widget = forms.Textarea(attrs={'rows':3})
         return form
 
 def listadoCursos(request):
@@ -128,13 +128,28 @@ def createCurso(request):
         if form.is_valid():
             print 'sdfdsfdsfdsfds'
             curso = Cursos(
-                fecha=form.cleaned_data['fecha'],
                 titulo=form.cleaned_data['titulo'],
                 area=form.cleaned_data['area'],
                 costo=form.cleaned_data['costo'],
-                duracion=form.cleaned_data['duracion'],
-                material=form.cleaned_data['material'])
+                material=form.cleaned_data['material'],
+                region=form.cleaned_data['region'],
+                responsable=form.cleaned_data['responsable'],
+                fecha_inicio=form.cleaned_data['fecha_inicio'],
+                fecha_conclucion=form.cleaned_data['fecha_conclucion'],
+                objetivo=form.cleaned_data['objetivo'])
+
+            municipios = form.cleaned_data.pop('municipios')
             curso.save()
+            print 'los muinsssssss'
+            print municipios
+            # print ', '.join([str(x) for x in municipios])
+            # print str(municipios).strip('[]')
+            # curso.municipios.add(str(municipios).strip('[]'))
+
+            for m in municipios:
+                curso.municipios.add(m)
+            # for c in choice_fields:
+            #     Subjects.objects.create(subject=c)
 
             return HttpResponseRedirect(reverse_lazy('lista_cursos'))
     else:
@@ -149,13 +164,21 @@ def eliminarCurso(request, id):
     return HttpResponseRedirect(reverse_lazy('lista_cursos'))
 
 
+# class EditCurso(UpdateView):
+#     template_name = "finanzas/edit_curso.html"
+#     model = Cursos
+#     # form_class = CursoForm
+#     fields = ['fecha', 'titulo', 'area', 'costo', 'duracion', 'material', 'region', 'municipios']
+#     success_url = reverse_lazy('lista_cursos')
+
+#     def get_form(self, form_class):
+#         form = super(EditCurso, self).get_form(form_class)
+#         form.fields['fecha'].widget = forms.DateInput(format='%Y-%m-%d')
+#         form.fields['municipios'].widget = forms.MultipleChoiceField(choices=list_of_choices)
+#         return form
+
 class EditCurso(UpdateView):
     template_name = "finanzas/edit_curso.html"
     model = Cursos
-    fields = ['fecha', 'titulo', 'area', 'costo', 'duracion', 'material']
+    form_class = CursoEditForm
     success_url = reverse_lazy('lista_cursos')
-
-    def get_form(self, form_class):
-        form = super(EditCurso, self).get_form(form_class)
-        form.fields['fecha'].widget = forms.DateInput(format='%Y-%m-%d')
-        return form

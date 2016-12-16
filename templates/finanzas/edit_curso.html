@@ -19,20 +19,7 @@
                     <br />
                     <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post">
                     {% csrf_token %}
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Fecha<span class="required"></span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          
-                          {{form.fecha|add_class:"form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
-                          {% if form.errors.fecha %}
-                            <ul id="parsley-id-5" class="parsley-errors-list filled">
-                              <li class="parsley-required">{{form.errors.fecha|removetags:'ul li'}}</li>
-                            </ul>
-                         {% endif %}
-
-                        </div>
-                      </div>
+                     
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Titulo<span class="required"></span>
                         </label>
@@ -76,19 +63,6 @@
                         </div>
                       </div>
 
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Duracion<span class="required"></span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          {{form.duracion|add_class:"form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
-                          {% if form.errors.duracion %}
-                            <ul id="parsley-id-5" class="parsley-errors-list filled">
-                              <li class="parsley-required">{{form.errors.duracion|removetags:'ul li'}}</li>
-                            </ul>
-                         {% endif %}
-
-                        </div>
-                      </div>
 
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Material<span class="required"></span>
@@ -102,10 +76,106 @@
                             </ul>
                          {% endif %}
 
-                         
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Region<span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          
+                          <select class=" form-control col-md-7 col-xs-12" id="id_regiones" name="region">
+                            <option value="" selected="selected">--- seleccionar---</option>
+                            <option value="1">Metropolitana</option>
+                            <option value="2">Vallez</option>
+                            <option value="3">Tropico</option>
+                            <option value="4">Cono sur</option>
+                            <option value="5">Andina</option>
+                          </select>
+                          {% if form.errors.regiones %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{form.errors.regiones|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
 
                         </div>
                       </div>
+
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Municipos</label>
+                        
+                        <div class="col-md-6 col-sm-6 col-xs-12 ">
+                          <select class="select2_multiple form-control " multiple="multiple" id="id_municipios" name="municipios">
+                            <option>Choose option</option>
+                          </select>
+                          {% if form.errors.municipios %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{form.errors.municipios|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+                        </div>
+
+                      </div>
+                       <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Responsable<span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          {{form.responsable|add_class:"form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
+                          {% if form.errors.responsable %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{form.errors.responsable|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                        </div>
+                      </div>
+
+
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Fecha de Inicio<span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          
+                          {{form.fecha_inicio|add_class:"date-picker form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
+                          {% if form.errors.fecha_inicio %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{form.errors.fecha_inicio|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Fecha de Conclucion<span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          
+                          {{form.fecha_conclucion|add_class:"date-picker form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
+                          {% if form.errors.fecha_conclucion %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{form.errors.fecha_conclucion|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Objetivo<span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          
+                          {{form.objetivo|add_class:" form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
+                          {% if form.errors.objetivo %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{form.errors.objetivo|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                        </div>
+                      </div>
+
 
                       <div class="ln_solid"></div>
                       <div class="form-group">
@@ -134,10 +204,14 @@
 
 {% endblock %}
 {% block js %}
+{% load staticfiles %}
+
+  
+  <script src="{% static "js/select2.full.min.js"%}"></script>
   <script>
       
 
-         $('#id_fecha').daterangepicker({
+         $('#id_fecha_inicio').daterangepicker({
           singleDatePicker: true,
           calender_style: "picker_4",
           locale: {
@@ -158,6 +232,11 @@
           console.log(start.toISOString(), end.toISOString(), label);
         });
 
+        $(".select2_multiple").select2({
+          maximumSelectionLength: 10,
+          placeholder: "Municipios",
+          allowClear: true,
+        });
 
         // if ($("#id_regiones").val() == ''){
           
@@ -283,17 +362,16 @@
 
             $("#id_municipios").html(""); 
               $(array_list).each(function (i) { //populate child options 
-         
 
-              $("#id_municipios").append("<option value=\""+array_list[i].value+"\">"+array_list[i].display+"</option>");
-
-              
-
+                $("#id_municipios").append("<option  value=\""+array_list[i].value+"\" >"+array_list[i].display+"</option>");
               });
 
-              $("#id_municipios option:selected").removeAttr("selected");
+              $("#id_municipios option:selected").removeAttr("selected"); 
 
-              $('#id_municipios option[value="{{form.municipio.value}}"]').attr("selected", "selected");
+              {% for d in  form.municipios.value%}
+                $('#id_municipios option[value="{{d.tag}}"]').attr("selected", "selected");
+                
+              {% endfor %}
 
           }
 

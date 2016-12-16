@@ -40,18 +40,33 @@
         <div class="animate form login_form">
           <section class="login_content">
             <form method="post"  novalidate>{% csrf_token %}
-              <h1>Login</h1>
 
-              
-             
+              <h1>Login</h1>
+                {% if form.non_field_errors%}
+                  <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                    <strong>{{form.non_field_errors|removetags:"ul li"}}</strong>
+                  </div>
+                {% endif %}
                 <div >
-                  {{form.username|add_class:"form-control"|attr:"placeholder:Usuario"|attr:"required:required"}}
+                  {{form.username|add_class:"form-control"|attr:"placeholder:Usuario"|add_error_class:"parsley-error"}}
+                  {% if form.errors.username %}
+                      <ul id="parsley-id-5" class="parsley-errors-list filled">
+                        <li class="parsley-required">{{form.errors.username|removetags:'ul li'}}</li>
+                      </ul>
+                   {% endif %}
                 </div>
              
               
              
                 <div >
-                  {{form.password|add_class:"form-control"|attr:"placeholder:Contraseña"|attr:"required:required"}}
+                  {{form.password|add_class:"form-control"|attr:"placeholder:Contraseña"|add_error_class:"parsley-error"}}
+                  {% if form.errors.password %}
+                      <ul id="parsley-id-5" class="parsley-errors-list filled">
+                        <li class="parsley-required">{{form.errors.password|removetags:'ul li'}}</li>
+                      </ul>
+                   {% endif %}
                 </div>
               
 

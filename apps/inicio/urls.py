@@ -9,4 +9,7 @@ urlpatterns = patterns('',
 	url(r'^user_create/$', 'apps.inicio.views.UserCreate', name='user_create'),
 	url(r'^lista_usuarios/$', 'apps.inicio.views.ListaUsuarios', name='lista_usuarios'),
 	url(r'^delete_usuario/(?P<id>\d+)$', 'apps.inicio.views.eliminarUsuario', name='delete_usuario'),
+  	url(r'^editar_user/(?P<pk>\d+)$', 'apps.inicio.views.user_edit', name='editar_user'),
+  	url(r'^editar_user/(?P<pk>\d+)/password$', 'apps.inicio.views.change_password', name='user_password'),
+
 	)

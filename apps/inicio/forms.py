@@ -25,6 +25,14 @@ list_of_choices = (
     ('Supervisor', 'Supervisor'),
 )
 
+list_of_edit = (
+    ('', 'selecciona'),
+    ('admin_sistema', 'Administrador Sistema'),
+    ('admin', 'Administrador'),
+    ('jefe_area', 'Jefe Area'),
+    ('supervisor', 'Supervisor'),
+)
+
 list_of_area = (
     ('', 'selecciona'),
     ('Planificacion', 'Planificacion'),
@@ -61,14 +69,24 @@ class UserForm(forms.ModelForm):
         return self.cleaned_data
 
 
-# class UserFormedit(forms.ModelForm):
-#     nombre = forms.CharField(label="Nombre")
-#     p_apellido = forms.CharField(label="Primer apellido")
-#     s_apellido = forms.CharField(required=False, label="Segundo apellido")
-#     avatar = forms.ImageField(required=False, label="Foto")
-#     rol = forms.ChoiceField(choices=list_of_choices)
-#     empresa = forms.ModelChoiceField(queryset=Personajuridica.objects.all(), empty_label='seleccione')
+class UserFormedit(forms.ModelForm):
+    nombre = forms.CharField(label="Nombre")
+    p_apellido = forms.CharField(label="Primer apellido")
+    s_apellido = forms.CharField(required=False, label="Segundo apellido")
+    roles = forms.ChoiceField(choices=list_of_edit)
+    area = forms.ChoiceField(required=False, choices=list_of_area)
 
-#     class Meta:
-#         model = User
-#         fields = ('nombre', 'p_apellido', 'avatar', 's_apellido', 'username')
+    class Meta:
+        model = User
+        fields = ('nombre', 'p_apellido', 's_apellido', 'username')
+
+
+class reset_form(forms.Form):
+    newpassword1 = forms.CharField(max_length=20, label="Contraseña", widget=forms.TextInput(attrs={'type':'password',  'class' : 'span'}))
+    newpassword2 = forms.CharField(max_length=20, label="Contraseña (de nuevo)", widget=forms.TextInput(attrs={'type':'password',  'class' : 'span'}))
+
+    def clean(self):
+        if 'newpassword1' in self.cleaned_data and 'newpassword2' in self.cleaned_data:
+            if self.cleaned_data['newpassword1'] != self.cleaned_data['newpassword2']:
+                raise forms.ValidationError("Los dos campos de contraseña no coinciden.")
+        return self.cleaned_data

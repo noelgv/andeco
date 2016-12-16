@@ -30,12 +30,11 @@
                           <tr>
                            
                             <th class="essential persist">N°</th>
-                            <th class="oculto">Fecha</th>
                             <th>Titulo</th>
                             <th>Area</th>
                             <th>Costo</th>
-                            <th>Duracion</th>
-                            <th>Material</th>
+                            <th>Region</th>
+                            <th>Municipios</th>
 
                             <th class="essential persist"></th>
                            
@@ -47,13 +46,33 @@
                           {% for convenios in cursos %}
                               <tr>
                                 <td>{{forloop.counter}}</td>
-                               
-                                <td>{{ convenios.fecha}}</td>
+                              
                                 <td>{{ convenios.titulo}}</td>
                                 <td>{{ convenios.area}}</td>
                                 <td>{{ convenios.costo}}</td>
-                                <td>{{ convenios.duracion}}</td>
-                                <td>{{ convenios.material}}</td>
+                                <td>
+                                  {% if convenios.region == '1' %}
+                                    Metropolitana
+                                  {% endif %}
+                                  {% if convenios.region == '2' %}
+                                    Vallez
+                                  {% endif %}
+                                  {% if convenios.region == '3' %}
+                                    Tropico
+                                  {% endif %}
+                                  {% if convenios.region == '4' %}
+                                    Cono sur
+                                  {% endif %}
+                                  {% if convenios.region == '5' %}
+                                    Andina
+                                  {% endif %}
+                                </td>
+                                <td>
+                                  {% for m in convenios.municipios.names %}
+                                  <button type="button" class="btn btn-info btn-xs">{{m}}</button>
+                                  {% endfor %}
+                                  
+                                </td>
                                 
                                 <td>
                               

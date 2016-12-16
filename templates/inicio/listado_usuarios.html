@@ -30,6 +30,7 @@
                            
                             <th class="essential persist">N°</th>
                             <th class="oculto">Usuario</th>
+                            <th>Rol</th>
                             <th>Area</th>
                             
                             <th class="essential persist"></th>
@@ -44,12 +45,32 @@
                                 <td>{{forloop.counter}}</td>
                                
                                 <td>{{ u.username}}</td>
-                                <td>{{ u.area}}</td>
-                                
-                              
+                                <td>
+                                  {% if u|has_role:'admin_sistema' %}
+                                    Administrador sistema
+                                  {% endif %}
+                                  {% if u|has_role:'admin' %}
+                                    Administrador
+                                  {% endif %}
+                                  {% if u|has_role:'jefe_area' %}
+                                    Jefe de area
+                                  {% endif %}
+                                  {% if u|has_role:'supervisor' %}
+                                    Supervisor
+                                  {% endif %}
+                                </td>
+                                <td>
+
+                                  {% if u.area %}
+                                    {{u.area}}
+                                  {% else %}
+                                    -----------------
+                                  {% endif %}
+
+                                </td>
                                  
                                 <td>
-                                  <a href="/editar_proyecto/{{convenios.pk}}" class="btn btn-warning btn-sm" data-toggle="tooltip" data-original-title="Editar" ><i class="fa fa-pencil"></i></a>
+                                  <a href="/editar_user/{{u.pk}}" class="btn btn-warning btn-sm" data-toggle="tooltip" data-original-title="Editar" ><i class="fa fa-pencil"></i></a>
                               
                                   
                                   

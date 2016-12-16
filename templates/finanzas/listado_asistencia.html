@@ -67,7 +67,17 @@
                                 <td>{{ convenios.municipio}}</td>
                                 <td>{{ convenios.nombre}}</td>
                                 <td>{{ convenios.responsable}}</td>
-                                <td>{{ convenios.estado}}</td>
+                                <td>
+                                  {% if convenios.estado == 'No iniciado' %}
+                                    <button type="button" class="btn btn-danger btn-xs">{{ convenios.estado}}</button>
+                                  {% endif %}
+                                  {% if convenios.estado == 'En proceso' %}
+                                    <button type="button" class="btn btn-warning btn-xs">{{ convenios.estado}}</button>
+                                  {% endif %}
+                                  {% if convenios.estado == 'Finalizado' %}
+                                    <button type="button" class="btn btn-success btn-xs">{{ convenios.estado}}</button>
+                                  {% endif %}
+                                </td>
                                 
                                 <td>
                               

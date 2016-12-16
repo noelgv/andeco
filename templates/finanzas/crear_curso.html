@@ -20,20 +20,6 @@
                     <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post">
                     {% csrf_token %}
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Fecha<span class="required"></span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          
-                          {{form.fecha|add_class:"form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
-                          {% if form.errors.fecha %}
-                            <ul id="parsley-id-5" class="parsley-errors-list filled">
-                              <li class="parsley-required">{{form.errors.fecha|removetags:'ul li'}}</li>
-                            </ul>
-                         {% endif %}
-
-                        </div>
-                      </div>
-                      <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Titulo<span class="required"></span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -77,20 +63,6 @@
                       </div>
 
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Duracion<span class="required"></span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          {{form.duracion|add_class:"form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
-                          {% if form.errors.duracion %}
-                            <ul id="parsley-id-5" class="parsley-errors-list filled">
-                              <li class="parsley-required">{{form.errors.duracion|removetags:'ul li'}}</li>
-                            </ul>
-                         {% endif %}
-
-                        </div>
-                      </div>
-
-                      <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Material<span class="required"></span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -106,6 +78,97 @@
 
                         </div>
                       </div>
+                       <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Region<span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          
+                          {{form.region|add_class:"form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
+                          {% if form.errors.region %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{form.errors.region|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                         
+
+                        </div>
+                      </div>
+
+                      
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Municipos</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12 ">
+                          <select class="select2_multiple form-control " multiple="multiple" id="id_municipio" name="municipios">
+                            <option>Choose option</option>
+                          </select>
+                          {% if form.errors.municipios %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{form.errors.municipios|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+                        </div>
+                      </div>
+                       <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Responsable<span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          {{form.responsable|add_class:"form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
+                          {% if form.errors.responsable %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{form.errors.responsable|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                        </div>
+                      </div>
+
+
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Fecha de Inicio<span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          
+                          {{form.fecha_inicio|add_class:"date-picker form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
+                          {% if form.errors.fecha_inicio %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{form.errors.fecha_inicio|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Fecha de Conclucion<span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          
+                          {{form.fecha_conclucion|add_class:"date-picker form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
+                          {% if form.errors.fecha_conclucion %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{form.errors.fecha_conclucion|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Objetivo<span class="required"></span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          
+                          {{form.objetivo|add_class:" form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
+                          {% if form.errors.objetivo %}
+                            <ul id="parsley-id-5" class="parsley-errors-list filled">
+                              <li class="parsley-required">{{form.errors.objetivo|removetags:'ul li'}}</li>
+                            </ul>
+                         {% endif %}
+
+                        </div>
+                      </div>
+
 
                       <div class="ln_solid"></div>
                       <div class="form-group">
@@ -134,10 +197,15 @@
 
 {% endblock %}
 {% block js %}
+{% load staticfiles %}
+
+  
+  <script src="{% static "js/select2.full.min.js"%}"></script>
+
   <script>
       
 
-         $('#id_fecha').daterangepicker({
+         $('#id_fecha_inicio').daterangepicker({
           singleDatePicker: true,
           calender_style: "picker_4",
           locale: {
@@ -156,6 +224,12 @@
           }
         }, function(start, end, label) {
           console.log(start.toISOString(), end.toISOString(), label);
+        });
+
+        $(".select2_multiple").select2({
+          maximumSelectionLength: 10,
+          placeholder: "Municipios",
+          allowClear: true,
         });
 
 
@@ -179,7 +253,6 @@
         //   var options = $(this).data('options').filter('[value=' + id + ']');
         //   $('#id_municipios').html(options);
         // });
-
 
         var Metropolitana = [
           {display: "Cochabamba", value: "cochabamba"},
@@ -207,7 +280,6 @@
           {display:"San Benito", value:"San Benito"}];
 
           var Tropico = [
-          {display:"Punata", value:"Punata"},
           {display:"Entre Rios", value:"Entre Rios"},
           {display:"Shinahota", value:"Shinahota"},
           {display:"Colomi", value:"Colomi"},
@@ -240,7 +312,7 @@
          
         
             //If parent option is changed
-        $("#id_regiones").change(function() {
+        $("#id_region").change(function() {
                 var parent = $(this).val(); //get option value from parent 
 
                 switch(parent){ //using switch compare selected option and populate child
@@ -260,69 +332,23 @@
                         list(Andina);
                         break;
                     default: //default child option is blank
-                        $("#id_municipios").html('');  
+                        $("#id_municipio").html('');  
                         break;
                 }
           });
           //function to populate child select box
           function list(array_list){
                //reset child options
-              $("#id_municipios").html(""); 
+               $("#id_municipio").html(""); 
               $(array_list).each(function (i) { //populate child options 
                   console.log(i);
          
 
-              $("#id_municipios").append("<option value=\""+array_list[i].value+"\">"+array_list[i].display+"</option>");
+              $("#id_municipio").append("<option value=\""+array_list[i].value+"\">"+array_list[i].display+"</option>");
              
 
               });
           }
-
-
-          function municipio(array_list){
-
-            $("#id_municipios").html(""); 
-              $(array_list).each(function (i) { //populate child options 
-         
-
-              $("#id_municipios").append("<option value=\""+array_list[i].value+"\">"+array_list[i].display+"</option>");
-
-              
-
-              });
-
-              $("#id_municipios option:selected").removeAttr("selected");
-
-              $('#id_municipios option[value="{{form.municipio.value}}"]').attr("selected", "selected");
-
-          }
-
-          var region_data;
-
-          {% if form.region.value == '1' %}
-            region_data = Metropolitana
-          {% endif %}
-
-          {% if form.region.value == '2' %}
-            region_data = Vallez
-          {% endif %}
-
-          {% if form.region.value == '3' %}
-            region_data = Tropico
-          {% endif %}
-
-          {% if form.region.value == '4' %}
-            region_data = Conosur
-          {% endif %}
-
-          {% if form.region.value == '5' %}
-            region_data = Andina
-          {% endif %}
-
-          municipio(region_data);
-
-          $('#id_regiones option:selected').removeAttr("selected");
-          $('#id_regiones option[value="{{form.region.value}}"]').attr("selected", "selected");
         
 
 

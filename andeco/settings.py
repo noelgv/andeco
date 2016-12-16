@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'widget_tweaks',
     'django_extensions',
     'rolepermissions',
+    'taggit',
 )
 
 MIDDLEWARE_CLASSES = (

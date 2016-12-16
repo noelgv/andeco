@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect, HttpResponseRedirect, render_to_response
+from django.shortcuts import render, redirect, HttpResponseRedirect, render_to_response, get_object_or_404
 from django.views.generic import FormView, View, TemplateView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.core.urlresolvers import reverse_lazy
-from .forms import LoginForm, UserForm
+from .forms import LoginForm, UserForm, UserFormedit, reset_form
 # PARA ASIGNAR USUARIOS A ROLES
 from apps.users.models import User
 from apps.inicio.roles import *
@@ -114,3 +114,50 @@ def ListaUsuarios(request):
     variables = RequestContext(request, {'usuarios': users})
 
     return render_to_response('inicio/listado_usuarios.html', variables)
+
+
+def user_edit(request, pk):
+        user = get_object_or_404(User, pk=pk)
+        form = UserFormedit()
+
+        if request.method == "POST":
+
+            form = UserFormedit(request.POST, instance=user)
+            if form.is_valid():
+                user = form.save(commit=False)
+                # post.author = request.user
+                user.save()
+
+                rol = form.cleaned_data['roles']
+
+                if rol == 'admin_sistema':
+                    AdminSistema.assign_role_to_user(user)
+
+                if rol == 'admin':
+                    Admin.assign_role_to_user(user)
+
+                if rol == 'jefe_area':
+                    JefeArea.assign_role_to_user(user)
+
+                if rol == 'supervisor':
+                    Supervisor.assign_role_to_user(user)
+
+                return HttpResponseRedirect(reverse_lazy('lista_usuarios'))
+
+        return render(request, 'inicio/update.html', {'user_form': form, 'usere': user})
+
+
+def change_password(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    if request.method == 'POST':
+        form = reset_form(request.POST)
+        if form.is_valid():
+            newpassword = form.cleaned_data['newpassword1']
+            user.set_password(newpassword)
+            user.save()
+            return HttpResponseRedirect(reverse_lazy('lista_usuarios'))
+
+    else:
+        form = reset_form()
+    content = RequestContext(request, {'form': form, 'user_data': user})
+    return render(request, 'inicio/reset_password.html', content,)

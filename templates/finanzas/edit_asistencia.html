@@ -7,7 +7,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Registro Proyecto</h3>
+                <h3>Editar Asistencia</h3>
               </div>         
             </div>
             <div class="clearfix"></div>
@@ -19,19 +19,7 @@
                     <br />
                     <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post">
                     {% csrf_token %}
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Codigo<span class="required"></span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          {{form.codigo|add_class:"form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
-                          {% if form.errors.codigo %}
-                            <ul id="parsley-id-5" class="parsley-errors-list filled">
-                              <li class="parsley-required">{{form.errors.codigo|removetags:'ul li'}}</li>
-                            </ul>
-                         {% endif %}
-
-                        </div>
-                      </div>
+                      
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Nombre<span class="required"></span>
                         </label>
@@ -148,8 +136,14 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Estado<span class="required"></span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          
-                          {{form.estado|add_class:"form-control col-md-7 col-xs-12"|add_error_class:"parsley-error"}}
+
+                          <select class=" form-control col-md-7 col-xs-12" id="id_estado" name="estado">
+                            <option value="No iniciado">No iniciado</option>
+                            <option value="En proceso">En proceso</option>
+                            <option value="Finalizado">Finalizado</option>
+                            
+                          </select>
+
                           {% if form.errors.estado %}
                             <ul id="parsley-id-5" class="parsley-errors-list filled">
                               <li class="parsley-required">{{form.errors.estado|removetags:'ul li'}}</li>
@@ -211,6 +205,9 @@
         }, function(start, end, label) {
           console.log(start.toISOString(), end.toISOString(), label);
         });
+
+        $('#id_estado option:selected').removeAttr("selected");
+        $('#id_estado option[value="{{form.estado.value}}"]').attr("selected", "selected");
 
 
         // if ($("#id_regiones").val() == ''){
